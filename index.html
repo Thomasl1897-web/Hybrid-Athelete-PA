@@ -176,7 +176,7 @@
   }
   .tab .tab-num{font-family:var(--font-mono);font-size:0.68rem;color:var(--ink-faint);}
   .tab:hover{color:var(--ink);border-color:var(--line);}
-  .tab.active{color:var(--on-accent);background:var(--amber);border-color:var(--amber);font-weight:600;}
+  .tab.active{color:var(--on-accent);background:var(--cyan);border-color:var(--cyan);font-weight:600;}
   .tab.active .tab-num{color:var(--on-accent);opacity:0.7;}
 
   .panel-head{margin-bottom:20px;}
@@ -324,7 +324,56 @@
   .workout-help-list li{margin-bottom:6px;}
   .workout-help-watch{margin:0;color:var(--ink-muted);font-size:0.9rem;line-height:1.6;background:var(--amber-soft);border-left:3px solid var(--amber);padding:10px 12px;border-radius:3px;}
 
-  .panel:not([hidden]){animation:fadein 0.25s ease;}
+  .panel:not([hidden]),.subpanel:not([hidden]){animation:fadein 0.25s ease;}
+
+  .workout-subnav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+  .subtab{font-family:var(--font-body);font-weight:600;font-size:0.88rem;padding:9px 16px;border-radius:var(--radius);cursor:pointer;background:var(--panel);border:1px solid var(--line);color:var(--ink-muted);}
+  .subtab:hover{color:var(--ink);border-color:var(--cyan);}
+  .subtab.active{background:var(--cyan);border-color:var(--cyan);color:var(--on-accent);}
+
+  .progress-group{margin-bottom:20px;}
+  .progress-group:last-child{margin-bottom:0;}
+  .progress-group-name{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;color:var(--cyan);margin:0 0 8px;}
+  .progress-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 0;border-top:1px solid var(--line-soft);}
+  .progress-row:first-of-type{border-top:none;}
+  .progress-name{font-size:0.88rem;color:var(--ink);flex:1;min-width:140px;}
+  .progress-stats{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+  .progress-detail{font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-muted);white-space:nowrap;}
+  .progress-none{font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);font-style:italic;white-space:nowrap;}
+  .progress-delta{font-family:var(--font-mono);font-size:0.7rem;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+  .progress-delta.up{background:var(--cyan-soft);color:var(--cyan);}
+  .progress-delta.flat{background:var(--panel-alt);color:var(--ink-faint);}
+  .progress-delta.down{background:var(--panel-alt);color:var(--ink-muted);}
+
+  .recipe-search-wrap{margin-bottom:18px;}
+  .recipe-search-input{width:100%;font-family:var(--font-body);font-size:0.95rem;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);}
+  .recipe-search-input:focus{outline:2px solid var(--cyan);outline-offset:1px;border-color:var(--cyan);}
+  .recipe-search-input::placeholder{color:var(--ink-faint);}
+
+  .ref-section{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;}
+  .ref-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:none;border:none;cursor:pointer;text-align:left;}
+  .ref-toggle-title{font-family:var(--font-body);font-weight:600;font-size:0.95rem;color:var(--ink);}
+  .ref-toggle-icon{color:var(--cyan);font-family:var(--font-mono);font-size:0.85rem;}
+  .ref-content{padding:0 18px 18px;}
+  .ref-item-title{font-family:var(--font-body);font-weight:600;font-size:0.92rem;color:var(--ink);margin:0 0 10px;}
+
+  .adj-row{background:var(--panel-alt);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+  .adj-row:last-child{margin-bottom:0;}
+  .adj-pattern{font-size:0.87rem;color:var(--ink);margin:0 0 4px;font-weight:600;}
+  .adj-interp{font-size:0.84rem;color:var(--ink-muted);margin:0 0 6px;font-style:italic;}
+  .adj-action{font-size:0.84rem;color:var(--ink);margin:0;}
+  .adj-action strong{color:var(--cyan);}
+
+  .status-block{margin-bottom:16px;}
+  .status-block:last-child{margin-bottom:0;}
+  .status-week{color:var(--ink-muted);font-size:0.9rem;margin:0 0 10px;}
+  .status-alert{background:var(--amber-soft);border-left:3px solid var(--amber);color:var(--ink);padding:10px 12px;border-radius:3px;font-size:0.87rem;line-height:1.5;margin:0 0 12px;}
+  .status-reset-btn{font-family:var(--font-mono);font-size:0.75rem;padding:8px 14px;background:var(--panel-alt);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-muted);cursor:pointer;}
+  .status-reset-btn:hover{border-color:var(--cyan);color:var(--ink);}
+  .status-flags-title{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;font-size:0.72rem;color:var(--cyan);margin:0 0 10px;}
+  .status-clear{color:var(--ink-muted);font-size:0.87rem;font-style:italic;margin:0;}
+  .status-flag-row{background:var(--amber-soft);border-left:3px solid var(--amber);padding:8px 12px;border-radius:3px;font-size:0.84rem;color:var(--ink);line-height:1.5;margin-bottom:8px;}
+  .status-flag-row:last-child{margin-bottom:0;}
   @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 
   /* ---- meal plan + grocery shared controls ---- */
@@ -453,13 +502,10 @@
     <button type="button" class="tab" role="tab" id="tab-meals" data-tab="meals" aria-selected="false" aria-controls="panel-meals"><span class="tab-num">01</span><span class="tab-label">Meals</span></button>
     <button type="button" class="tab" role="tab" id="tab-grocery" data-tab="grocery" aria-selected="false" aria-controls="panel-grocery"><span class="tab-num">02</span><span class="tab-label">Grocery</span></button>
     <button type="button" class="tab" role="tab" id="tab-warmup" data-tab="warmup" aria-selected="false" aria-controls="panel-warmup"><span class="tab-num">03</span><span class="tab-label">Warm-Up</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day1" data-tab="day1" aria-selected="false" aria-controls="panel-day1"><span class="tab-num">04</span><span class="tab-label">Upper A</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day2" data-tab="day2" aria-selected="false" aria-controls="panel-day2"><span class="tab-num">05</span><span class="tab-label">Lower A</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day4" data-tab="day4" aria-selected="false" aria-controls="panel-day4"><span class="tab-num">06</span><span class="tab-label">Upper B</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day5" data-tab="day5" aria-selected="false" aria-controls="panel-day5"><span class="tab-num">07</span><span class="tab-label">Lower B</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day3" data-tab="day3" aria-selected="false" aria-controls="panel-day3"><span class="tab-num">08</span><span class="tab-label">Rest / Swim</span></button>
-    <button type="button" class="tab" role="tab" id="tab-recovery" data-tab="recovery" aria-selected="false" aria-controls="panel-recovery"><span class="tab-num">09</span><span class="tab-label">Recovery</span></button>
-    <button type="button" class="tab" role="tab" id="tab-progression" data-tab="progression" aria-selected="false" aria-controls="panel-progression"><span class="tab-num">10</span><span class="tab-label">Progression</span></button>
+    <button type="button" class="tab" role="tab" id="tab-workouts" data-tab="workouts" aria-selected="false" aria-controls="panel-workouts"><span class="tab-num">04</span><span class="tab-label">Workouts</span></button>
+    <button type="button" class="tab" role="tab" id="tab-day3" data-tab="day3" aria-selected="false" aria-controls="panel-day3"><span class="tab-num">05</span><span class="tab-label">Rest / Swim</span></button>
+    <button type="button" class="tab" role="tab" id="tab-recovery" data-tab="recovery" aria-selected="false" aria-controls="panel-recovery"><span class="tab-num">06</span><span class="tab-label">Recovery</span></button>
+    <button type="button" class="tab" role="tab" id="tab-progression" data-tab="progression" aria-selected="false" aria-controls="panel-progression"><span class="tab-num">07</span><span class="tab-label">Progression</span></button>
   </nav>
 
   <main class="panels">
@@ -552,7 +598,21 @@
       </div>
     </section>
 
-    <section id="panel-day1" class="panel" role="tabpanel" aria-labelledby="tab-day1" hidden>
+    <section id="panel-workouts" class="panel" role="tabpanel" aria-labelledby="tab-workouts" hidden>
+      <div class="panel-head">
+        <p class="eyebrow">Training</p>
+        <h2>Workouts</h2>
+        <p class="panel-sub">Pick a session to view exercises or log a set</p>
+      </div>
+
+      <div class="workout-subnav" role="tablist" aria-label="Select workout">
+        <button type="button" class="subtab active" role="tab" id="subtab-day1" data-subtab="day1" aria-selected="true" aria-controls="panel-day1">Upper A</button>
+        <button type="button" class="subtab" role="tab" id="subtab-day2" data-subtab="day2" aria-selected="false" aria-controls="panel-day2">Lower A</button>
+        <button type="button" class="subtab" role="tab" id="subtab-day4" data-subtab="day4" aria-selected="false" aria-controls="panel-day4">Upper B</button>
+        <button type="button" class="subtab" role="tab" id="subtab-day5" data-subtab="day5" aria-selected="false" aria-controls="panel-day5">Lower B</button>
+      </div>
+
+    <section id="panel-day1" class="subpanel" role="tabpanel" aria-labelledby="subtab-day1">
       <div class="panel-head">
         <p class="eyebrow">Workout</p>
         <h2>Upper Body A</h2>
@@ -708,7 +768,7 @@
       </div>
     </section>
 
-    <section id="panel-day2" class="panel" role="tabpanel" aria-labelledby="tab-day2" hidden>
+    <section id="panel-day2" class="subpanel" role="tabpanel" aria-labelledby="subtab-day2" hidden>
       <div class="panel-head">
         <p class="eyebrow">Workout</p>
         <h2>Lower Body A</h2>
@@ -847,18 +907,7 @@
       </div>
     </section>
 
-    <section id="panel-day3" class="panel" role="tabpanel" aria-labelledby="tab-day3" hidden>
-      <div class="panel-head">
-        <p class="eyebrow">Flexible Slot</p>
-        <h2>Rest or Active Recovery</h2>
-        <p class="panel-sub">Free day / optional swim slot</p>
-      </div>
-      <div class="note-card corner-ticks">
-        <p>Free day. If tapering for your triathlon, this is the natural slot for swim technique work or an easy conditioning session — legs will be fresher here than after Lower A/B.</p>
-      </div>
-    </section>
-
-    <section id="panel-day4" class="panel" role="tabpanel" aria-labelledby="tab-day4" hidden>
+    <section id="panel-day4" class="subpanel" role="tabpanel" aria-labelledby="subtab-day4" hidden>
       <div class="panel-head">
         <p class="eyebrow">Workout</p>
         <h2>Upper Body B</h2>
@@ -997,7 +1046,7 @@
       </div>
     </section>
 
-    <section id="panel-day5" class="panel" role="tabpanel" aria-labelledby="tab-day5" hidden>
+    <section id="panel-day5" class="subpanel" role="tabpanel" aria-labelledby="subtab-day5" hidden>
       <div class="panel-head">
         <p class="eyebrow">Workout</p>
         <h2>Lower Body B</h2>
@@ -1136,6 +1185,19 @@
       </div>
     </section>
 
+    </section>
+
+    <section id="panel-day3" class="panel" role="tabpanel" aria-labelledby="tab-day3" hidden>
+      <div class="panel-head">
+        <p class="eyebrow">Flexible Slot</p>
+        <h2>Rest or Active Recovery</h2>
+        <p class="panel-sub">Free day / optional swim slot</p>
+      </div>
+      <div class="note-card corner-ticks">
+        <p>Free day. If tapering for your triathlon, this is the natural slot for swim technique work or an easy conditioning session — legs will be fresher here than after Lower A/B.</p>
+      </div>
+    </section>
+
     <section id="panel-recovery" class="panel" role="tabpanel" aria-labelledby="tab-recovery" hidden>
       <div class="panel-head">
         <p class="eyebrow">Recovery Day</p>
@@ -1181,6 +1243,11 @@
         <p class="eyebrow">System Rules</p>
         <h2>Progression Guidelines</h2>
         <p class="panel-sub">How to advance safely across the 6–8 week cycle</p>
+      </div>
+
+      <div class="prog-section corner-ticks">
+        <h3>Training Status</h3>
+        <div id="training-status-body"></div>
       </div>
 
       <div class="prog-section corner-ticks">
@@ -1243,6 +1310,12 @@
           <li>Tighten rep ranges downward (e.g., shift 8–10 → 6–8) for a strength-emphasis block, then cycle back to hypertrophy ranges after.</li>
         </ul>
       </div>
+
+      <div class="prog-section corner-ticks">
+        <h3>Weight Progress Overview</h3>
+        <p class="prog-intro">First logged weight vs. most recent, per exercise, across all four workouts.</p>
+        <div id="progress-overview"></div>
+      </div>
     </section>
 
     <section id="panel-meals" class="panel" role="tabpanel" aria-labelledby="tab-meals" hidden>
@@ -1252,25 +1325,59 @@
         <p class="panel-sub">Browse any day's recipes · ~2,740 kcal/day avg · 145–160g protein/day</p>
       </div>
 
-      <div class="week-toggle" id="mp-week-toggle">
-        <button type="button" class="week-toggle-btn active" data-mpweek="1">Week 1</button>
-        <button type="button" class="week-toggle-btn" data-mpweek="2">Week 2</button>
+      <div class="recipe-search-wrap">
+        <input type="text" id="recipe-search-input" class="recipe-search-input" placeholder="Search all recipes by name or ingredient…">
       </div>
+      <div id="recipe-search-results" class="mp-meal-list" hidden></div>
 
-      <div class="week-grid" id="mp-day-select"></div>
+      <div id="mp-browse-wrap">
+        <div class="week-toggle" id="mp-week-toggle">
+          <button type="button" class="week-toggle-btn active" data-mpweek="1">Week 1</button>
+          <button type="button" class="week-toggle-btn" data-mpweek="2">Week 2</button>
+        </div>
 
-      <div id="mp-day-view"></div>
+        <div class="week-grid" id="mp-day-select"></div>
+
+        <div id="mp-day-view"></div>
+      </div>
 
       <div class="notif-settings corner-ticks">
         <p class="section-label">Notifications</p>
-        <p class="data-tools-note">Reminders fire while this app is open, even backgrounded — not once it's fully closed. Schedule: breakfast 06:30 office days / 08:30 other days · lunch 12:30 · snacks at their best time per the plan, collapsed to one 18:00 ping on office days · dinner 19:30 · prep &amp; cooking 19:00 · tomorrow's prep 21:00.</p>
+        <p class="data-tools-note">Reminders fire while this app is open, even backgrounded — not once it's fully closed. Schedule: breakfast 06:30 office days / 08:30 other days · lunch 12:30 · snacks at their best time per the plan, collapsed to one 18:00 ping on office days · dinner 19:30 · prep &amp; cooking 19:00 · tomorrow's prep 21:00 · bin collection 20:00 the evening before.</p>
         <button type="button" id="notif-enable-btn" class="log-save-btn">Enable Notifications</button>
         <p id="notif-status" class="log-status" aria-live="polite"></p>
         <div class="notif-toggles">
           <label class="notif-toggle"><input type="checkbox" id="notif-meals" checked> Meal &amp; snack times</label>
           <label class="notif-toggle"><input type="checkbox" id="notif-actions" checked> Prep actions (thaw / cook / freeze)</label>
           <label class="notif-toggle"><input type="checkbox" id="notif-tomorrow" checked> Evening "prep for tomorrow"</label>
+          <label class="notif-toggle"><input type="checkbox" id="notif-bins" checked> Bin collection (evening before)</label>
         </div>
+      </div>
+
+      <p class="section-label">Reference</p>
+
+      <div class="ref-section corner-ticks">
+        <button type="button" class="ref-toggle" data-reftarget="ref-emergency" aria-expanded="false">
+          <span class="ref-toggle-title">Emergency Office Lunches</span>
+          <span class="ref-toggle-icon">▾</span>
+        </button>
+        <div id="ref-emergency" class="ref-content" hidden></div>
+      </div>
+
+      <div class="ref-section corner-ticks">
+        <button type="button" class="ref-toggle" data-reftarget="ref-adjustment" aria-expanded="false">
+          <span class="ref-toggle-title">Adjustment Guide</span>
+          <span class="ref-toggle-icon">▾</span>
+        </button>
+        <div id="ref-adjustment" class="ref-content" hidden></div>
+      </div>
+
+      <div class="ref-section corner-ticks">
+        <button type="button" class="ref-toggle" data-reftarget="ref-heatscale" aria-expanded="false">
+          <span class="ref-toggle-title">Cooking Heat Scale &amp; Seasoning</span>
+          <span class="ref-toggle-icon">▾</span>
+        </button>
+        <div id="ref-heatscale" class="ref-content" hidden></div>
       </div>
     </section>
 
@@ -4269,6 +4376,161 @@ RECIPES["Restaurant pizza meal (estimate)"] = {
   },
   seasoningGuide: null
 };
+
+var EMERGENCY_LUNCHES = {
+ "intro": "These are Carrefour-style templates, not claims of exact stock or price. Check labels for protein and portion size. All avoid shellfish/seafood, mushrooms, tofu and disallowed cheeses.",
+ "items": [
+  {
+   "template": "Chicken-rice salad bowl",
+   "buy": "180-200 g ready-cooked plain chicken; 250 g microwave rice; 200 g bagged salad; 50 g hummus; 1 fruit.",
+   "assembly": "Heat rice in the microwave until steaming, or in a pan at 5/9 with 1-2 tbsp water. Combine chicken, rice and salad; use hummus as dressing. Season with smoked paprika, black pepper and dried herbs; salt only after tasting.",
+   "macros": "~800-900 kcal; 50-60 g P; 100-120 g C; 18-25 g F.",
+   "adjustments": "Training day: full rice + fruit. Rest day: use 125-150 g rice or save half."
+  },
+  {
+   "template": "Two chicken-hummus wraps + skyr",
+   "buy": "2 wholegrain wraps; 150 g cooked chicken strips; 70-80 g hummus; bagged salad; 145-200 g skyr; banana.",
+   "assembly": "Fill wraps with chicken, hummus and salad. Eat skyr and banana separately. No cooking is required; if warming chicken, use a pan at 5/9 for 2-3 minutes. Add paprika, pepper and oregano; avoid extra salt unless needed.",
+   "macros": "~850-950 kcal; 55-70 g P; 105-125 g C; 20-28 g F.",
+   "adjustments": "Training day: both wraps + banana. Rest day: one large wrap plus skyr and fruit."
+  },
+  {
+   "template": "Egg-lentil soup lunch",
+   "buy": "3 cooked eggs; 200-250 g ready lentil/legume salad; 400-500 ml vegetable soup; 100 g wholegrain bread; 145 g skyr.",
+   "assembly": "Heat soup at 5/9 until steaming, then hold at 2-3/9; do not hard-boil it. Combine eggs and lentil salad; eat bread and skyr alongside. Season with black pepper, paprika and herbs; ready-made soup may already be salty.",
+   "macros": "~850-1,000 kcal; 45-60 g P; 100-125 g C; 25-35 g F.",
+   "adjustments": "Training day: full bread and skyr. Rest day: 60 g bread and 2 eggs."
+  },
+  {
+   "template": "Chicken soup-and-bread backup",
+   "buy": "200 g cooked chicken; 500 ml vegetable/legume soup; 120 g wholegrain bread; 1 fruit; 1 plain skyr.",
+   "assembly": "Heat soup at 5/9 until steaming, then reduce to 2-3/9. Add chicken for the last 2-3 minutes or eat it cold; use bread as the carbohydrate source. Add pepper, garlic powder and dried herbs; taste before salting.",
+   "macros": "~800-950 kcal; 55-70 g P; 95-120 g C; 15-25 g F.",
+   "adjustments": "Long session: add juice or extra bread. Rest: reduce bread to 70-80 g."
+  }
+ ]
+};
+var ADJUSTMENT_GUIDE = {
+ "reviewBullets": [
+  "Body weight: weigh after waking and using the toilet, before food, 4-7 mornings per week. Compare weekly averages, not single readings.",
+  "Waist: measure once weekly under the same conditions at the navel, relaxed, using the same tape tension.",
+  "Performance: track gym loads, repetitions, running pace/heart-rate feel, racket stamina and perceived recovery.",
+  "Subjective markers: note hunger, sleep, soreness, mood, libido, concentration and motivation. These often reveal under-fuelling before scale changes do."
+ ],
+ "reviewTable": [
+  {
+   "pattern": "Weight stable; waist slowly down; strength/reps stable or rising",
+   "interpretation": "Excellent recomposition signal.",
+   "action": "Keep calories unchanged."
+  },
+  {
+   "pattern": "Weight down faster than about 0.25-0.5%/week, or running/strength/recovery deteriorates",
+   "interpretation": "Deficit may be too large for the activity load.",
+   "action": "Add 100-200 kcal/day, mainly 25-50 g carbohydrate around training."
+  },
+  {
+   "pattern": "Weight and waist both rising consistently without performance benefit",
+   "interpretation": "Average intake may exceed needs.",
+   "action": "Reduce 100-200 kcal/day, usually by removing one optional snack or 25-40 g carbohydrate."
+  },
+  {
+   "pattern": "Weight up but waist stable/down and performance rising",
+   "interpretation": "Could be glycogen, water or lean tissue.",
+   "action": "Do not cut based on the scale alone; reassess after another 1-2 weeks."
+  },
+  {
+   "pattern": "Persistent strong hunger, poor sleep, irritability or unusual soreness",
+   "interpretation": "Under-recovery or insufficient energy/carbohydrate.",
+   "action": "Add a planned snack and consider a lighter training day."
+  },
+  {
+   "pattern": "No visible change after only two weeks but markers are good",
+   "interpretation": "Two weeks is short and water fluctuations are large.",
+   "action": "Keep the plan another 1-2 weeks before changing."
+  }
+ ],
+ "modifyBullets": [
+  "Training cancelled: remove the planned pre/post-workout snack first. If hunger is lower, reduce one starch portion. Do not remove protein or vegetables.",
+  "Extra workout added: add 250-450 kcal for one extra moderate session; use banana toast, juice, rice, bread or oats plus 20-30 g protein if meals are far apart.",
+  "Session longer than expected: add 30-60 g carbohydrate per hour for work beyond roughly 75-90 minutes, then eat the normal dinner. Clear whey is optional when dinner is delayed.",
+  "Unusually high hunger: add 150-300 kcal from a real snack such as skyr + fruit, oats + milk, a sandwich or extra rice/potatoes. Reassess the prior 24-48 hours of training, sleep and meal timing.",
+  "Social meal: swap it for the planned dinner rather than adding it after dinner. Keep breakfast and lunch normal, include vegetables/fruit, and resume the plan next meal. Avoid compensatory fasting or excessive cardio.",
+  "Office-plus-training day feels under-fuelled: add the available office fruit plus 145 g skyr, or add 30-50 g dry rice/pasta to dinner."
+ ],
+ "priorityBullets": [
+  "Keep progressive resistance training as the muscle-building anchor: track loads/repetitions and recover sufficiently between hard sessions.",
+  "Because you are running about five times weekly, keep most runs genuinely easy and avoid turning every session into a threshold effort. High total frequency makes sleep and carbohydrate availability more important.",
+  "A full rest or low-load day is productive when fatigue is accumulating. Body recomposition is not improved by maximizing calorie burn at the expense of training quality."
+ ]
+};
+var HEAT_SCALE = {
+ "intro": "The recipe-specific guides in Part E assume a typical electric or induction hob. Pan thickness, burner size and induction responsiveness vary, so use the visual cues and reduce the level by one if your pan runs unusually hot.",
+ "heatTable": [
+  {
+   "setting": "1-2 / 9",
+   "meaning": "Very low",
+   "use": "Keep warm; finish delicate sauces; covered resting."
+  },
+  {
+   "setting": "3-4 / 9",
+   "meaning": "Low to medium-low",
+   "use": "Gentle simmer; oats; thick sauces; prevent sticking."
+  },
+  {
+   "setting": "5 / 9",
+   "meaning": "Medium",
+   "use": "Soften onion and vegetables; eggs; reheating."
+  },
+  {
+   "setting": "6 / 9",
+   "meaning": "Medium-high",
+   "use": "Bring sauces to a bubble; cook frozen vegetables; steady sauté."
+  },
+  {
+   "setting": "7 / 9",
+   "meaning": "High",
+   "use": "Brown mince, chicken and meatballs in a preheated pan."
+  },
+  {
+   "setting": "8 / 9",
+   "meaning": "Very high",
+   "use": "Short sear only; burger patties when the pan is not smoking."
+  },
+  {
+   "setting": "9 / 9",
+   "meaning": "Maximum",
+   "use": "Bring water to a boil; usually reduce after boiling."
+  }
+ ],
+ "seasoningBullets": [
+  "Keep iodized salt, black pepper, sweet or smoked paprika, garlic powder, ground cumin, dried oregano/Italian herbs, cinnamon and mild chili powder.",
+  "Season the full recipe using the quantities shown, then taste near the end. Reduced-salt soy sauce, curry paste, Parmesan, mozzarella, hummus and ready-made soup already contribute sodium.",
+  "Add dry spices for about 30 seconds at 4/9 before liquid when a recipe calls for blooming spices. Do not let garlic powder or paprika scorch.",
+  "For sleep comfort, keep evening chili mild. Increase aromatic spices such as cumin, paprika, oregano, garlic and black pepper before increasing chili heat."
+ ]
+};
+
+// Braine-l'Alleud 2026 waste calendar, zone 4 (part of the "zones 2,4,7,8" group).
+// Residual waste is weekly on Tuesdays; PMC and paper-cartons follow the specific
+// dates below. One correction from the source PDF: PMC's April date extracted as
+// the 4th (a Saturday) breaks an otherwise perfect every-Monday pattern across all
+// 25 other PMC/paper dates in the year, and April 6 is Easter Monday (a legal
+// holiday, which per the calendar's own rule shifts that week's collection to the
+// next day) — so this has been corrected to April 7.
+var BIN_SCHEDULE = {
+  residualWeekday: 2, // Tuesday (JS getDay(): 0=Sun..6=Sat)
+  residualExceptions: { "2026-07-21": "2026-07-22" }, // Fête Nationale falls on a Tuesday
+  pmcDates: [
+    "2026-01-12","2026-01-26","2026-02-09","2026-02-23","2026-03-09","2026-03-23",
+    "2026-04-07","2026-04-20","2026-05-04","2026-05-18","2026-06-01","2026-06-15","2026-06-29",
+    "2026-07-13","2026-07-27","2026-08-10","2026-08-24","2026-09-07","2026-09-21",
+    "2026-10-05","2026-10-19","2026-11-02","2026-11-16","2026-11-30","2026-12-14","2026-12-28"
+  ],
+  paperDates: [
+    "2026-01-19","2026-02-16","2026-03-16","2026-04-13","2026-05-11","2026-06-08",
+    "2026-07-06","2026-08-03","2026-08-31","2026-09-28","2026-10-26","2026-11-23","2026-12-21"
+  ]
+};
 </script>
 <script>
 (function(){
@@ -4284,6 +4546,10 @@ RECIPES["Restaurant pizza meal (estimate)"] = {
       p.hidden = (p.id !== 'panel-' + key);
     });
     if (key === 'today' && window.__renderTodayView) window.__renderTodayView();
+    if (key === 'progression'){
+      if (window.__renderProgressOverview) window.__renderProgressOverview();
+      if (window.__renderTrainingStatus) window.__renderTrainingStatus();
+    }
   }
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
@@ -4305,6 +4571,28 @@ RECIPES["Restaurant pizza meal (estimate)"] = {
   // Workouts are volatile now (chosen via the rotation picker on the Today tab,
   // not tied to a fixed weekday), so there's no calendar-based tab to jump to
   // on load. The Today tab is already marked active by default in the HTML.
+})();
+
+(function(){
+  var subtabs = document.querySelectorAll('.subtab');
+  var subpanels = document.querySelectorAll('.subpanel');
+  if (!subtabs.length) return;
+
+  function activateSub(key){
+    subtabs.forEach(function(t){
+      var isActive = t.getAttribute('data-subtab') === key;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    subpanels.forEach(function(p){
+      p.hidden = (p.id !== 'panel-' + key);
+    });
+  }
+  window.__activateSubtab = activateSub;
+
+  subtabs.forEach(function(t){
+    t.addEventListener('click', function(){ activateSub(t.getAttribute('data-subtab')); });
+  });
 })();
 
 var CATEGORY_ICONS = {
@@ -4443,6 +4731,242 @@ var WORKOUT_DATA = {
       watch:"Letting the hips sag or pike up during the plank — reset your position if that happens." }
   ]
 };
+
+(function(){
+  var container = document.getElementById("progress-overview");
+  if (!container) return;
+
+  var GROUPS = [
+    { key: "day1", label: "Upper A" },
+    { key: "day2", label: "Lower A" },
+    { key: "day4", label: "Upper B" },
+    { key: "day5", label: "Lower B" }
+  ];
+
+  function getHistory(dayKey){
+    try{
+      var raw = localStorage.getItem("weightlog:" + dayKey);
+      if (raw) return JSON.parse(raw);
+    }catch(e){}
+    return [];
+  }
+
+  function computeExerciseProgress(history, exerciseName){
+    var relevant = history
+      .filter(function(h){ return h.entries && h.entries[exerciseName] && h.entries[exerciseName].weight != null; })
+      .map(function(h){ return { date: h.date, weight: h.entries[exerciseName].weight, reps: h.entries[exerciseName].reps }; })
+      .sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+
+    if (!relevant.length) return null;
+    var first = relevant[0];
+    var latest = relevant[relevant.length - 1];
+    return { first: first, latest: latest, count: relevant.length, delta: Math.round((latest.weight - first.weight) * 10) / 10 };
+  }
+
+  function isFatigued(history, exerciseName){
+    var relevant = history
+      .filter(function(h){ return h.entries && h.entries[exerciseName] && h.entries[exerciseName].weight != null; })
+      .map(function(h){ return { date: h.date, weight: h.entries[exerciseName].weight, reps: h.entries[exerciseName].reps }; })
+      .sort(function(a, b){ return a.date < b.date ? -1 : 1; });
+    if (relevant.length < 3) return false;
+    var last3 = relevant.slice(-3);
+    function stallOrDrop(prev, curr){
+      if (curr.weight < prev.weight) return true;
+      if (curr.weight === prev.weight && (curr.reps == null || prev.reps == null || curr.reps <= prev.reps)) return true;
+      return false;
+    }
+    return stallOrDrop(last3[0], last3[1]) && stallOrDrop(last3[1], last3[2]);
+  }
+
+  function daysBetween(a, b){
+    var da = new Date(a + "T00:00:00");
+    var db = new Date(b + "T00:00:00");
+    return Math.round((db - da) / 86400000);
+  }
+  function todayISO(){ return new Date().toISOString().slice(0, 10); }
+
+  var DELOAD_ANCHOR_KEY = "training:deloadAnchor";
+
+  function getEarliestWorkoutLogDate(){
+    var dates = [];
+    ["day1", "day2", "day4", "day5"].forEach(function(dayKey){
+      getHistory(dayKey).forEach(function(h){ if (h.date) dates.push(h.date); });
+    });
+    if (!dates.length) return null;
+    dates.sort();
+    return dates[0];
+  }
+
+  function getDeloadAnchor(){
+    try{
+      var stored = localStorage.getItem(DELOAD_ANCHOR_KEY);
+      if (stored) return stored;
+    }catch(e){}
+    var earliest = getEarliestWorkoutLogDate();
+    if (earliest){
+      try{ localStorage.setItem(DELOAD_ANCHOR_KEY, earliest); }catch(e){}
+      return earliest;
+    }
+    return null;
+  }
+
+  function setDeloadAnchorToday(){
+    try{ localStorage.setItem(DELOAD_ANCHOR_KEY, todayISO()); }catch(e){}
+  }
+
+  function buildProgressRow(exerciseName, progress, fatigued){
+    var row = document.createElement("div");
+    row.className = "progress-row";
+
+    var nameSpan = document.createElement("span");
+    nameSpan.className = "progress-name";
+    nameSpan.textContent = exerciseName;
+    if (fatigued){
+      var flagBadge = document.createElement("span");
+      flagBadge.className = "progress-delta down";
+      flagBadge.style.marginLeft = "6px";
+      flagBadge.textContent = "⚑ fatigue";
+      nameSpan.appendChild(flagBadge);
+    }
+    row.appendChild(nameSpan);
+
+    if (!progress){
+      var noneSpan = document.createElement("span");
+      noneSpan.className = "progress-none";
+      noneSpan.textContent = "No sessions logged yet";
+      row.appendChild(noneSpan);
+      return row;
+    }
+
+    var stats = document.createElement("div");
+    stats.className = "progress-stats";
+
+    if (progress.count === 1){
+      var soloDetail = document.createElement("span");
+      soloDetail.className = "progress-detail";
+      soloDetail.textContent = (progress.latest.weight != null ? progress.latest.weight + "kg" : "\u2014") +
+                            (progress.latest.reps != null ? " \u00d7 " + progress.latest.reps : "") +
+                            " \u00b7 1 session";
+      stats.appendChild(soloDetail);
+    } else {
+      var delta = progress.delta;
+      var deltaSpan = document.createElement("span");
+      deltaSpan.className = "progress-delta " + (delta > 0 ? "up" : delta < 0 ? "down" : "flat");
+      deltaSpan.textContent = delta > 0 ? "+" + delta + "kg" : delta < 0 ? delta + "kg" : "steady";
+
+      var multiDetail = document.createElement("span");
+      multiDetail.className = "progress-detail";
+      multiDetail.textContent = progress.first.weight + "kg\u2192" + progress.latest.weight + "kg \u00b7 " + progress.count + " sessions";
+
+      stats.appendChild(deltaSpan);
+      stats.appendChild(multiDetail);
+    }
+
+    row.appendChild(stats);
+    return row;
+  }
+
+  function renderProgressOverview(){
+    container.innerHTML = "";
+    GROUPS.forEach(function(group){
+      var exercises = (WORKOUT_DATA[group.key] || []).map(function(e){ return e.name; });
+      var history = getHistory(group.key);
+
+      var groupDiv = document.createElement("div");
+      groupDiv.className = "progress-group";
+      var groupName = document.createElement("p");
+      groupName.className = "progress-group-name";
+      groupName.textContent = group.label;
+      groupDiv.appendChild(groupName);
+
+      exercises.forEach(function(name){
+        var progress = computeExerciseProgress(history, name);
+        var fatigued = isFatigued(history, name);
+        groupDiv.appendChild(buildProgressRow(name, progress, fatigued));
+      });
+
+      container.appendChild(groupDiv);
+    });
+  }
+
+  window.__renderProgressOverview = renderProgressOverview;
+  renderProgressOverview();
+
+  function renderTrainingStatus(){
+    var container = document.getElementById("training-status-body");
+    if (!container) return;
+    container.innerHTML = "";
+
+    var weekWrap = document.createElement("div");
+    weekWrap.className = "status-block";
+    var anchor = getDeloadAnchor();
+
+    if (anchor){
+      var weeks = Math.floor(daysBetween(anchor, todayISO()) / 7);
+      var weekP = document.createElement("p");
+      weekP.className = "status-week";
+      weekP.textContent = "Week " + weeks + " since your last deload (or since your first logged session, if you haven't deloaded yet).";
+      weekWrap.appendChild(weekP);
+
+      if (weeks >= 5){
+        var alertP = document.createElement("p");
+        alertP.className = "status-alert";
+        alertP.textContent = "You're in the deload window (every 5th\u20136th week) \u2014 cut working-set volume ~40\u201350% or load 15\u201320% this week, and treat power work as a technique refinement, not a taper.";
+        weekWrap.appendChild(alertP);
+      }
+
+      var resetBtn = document.createElement("button");
+      resetBtn.type = "button";
+      resetBtn.className = "status-reset-btn";
+      resetBtn.textContent = "Mark Deload Done";
+      resetBtn.addEventListener("click", function(){
+        if (!confirm("Reset the deload counter to today?")) return;
+        setDeloadAnchorToday();
+        renderTrainingStatus();
+      });
+      weekWrap.appendChild(resetBtn);
+    } else {
+      var noneP = document.createElement("p");
+      noneP.className = "status-week";
+      noneP.textContent = "Log a session on any workout to start tracking your deload schedule.";
+      weekWrap.appendChild(noneP);
+    }
+    container.appendChild(weekWrap);
+
+    var flagsWrap = document.createElement("div");
+    flagsWrap.className = "status-block";
+    var flagsTitle = document.createElement("p");
+    flagsTitle.className = "status-flags-title";
+    flagsTitle.textContent = "Fatigue Flags";
+    flagsWrap.appendChild(flagsTitle);
+
+    var flagged = [];
+    GROUPS.forEach(function(group){
+      var history = getHistory(group.key);
+      (WORKOUT_DATA[group.key] || []).forEach(function(ex){
+        if (isFatigued(history, ex.name)) flagged.push({ name: ex.name, day: group.label });
+      });
+    });
+
+    if (!flagged.length){
+      var clearP = document.createElement("p");
+      clearP.className = "status-clear";
+      clearP.textContent = "No fatigue flags right now \u2014 keep progressing as planned.";
+      flagsWrap.appendChild(clearP);
+    } else {
+      flagged.forEach(function(f){
+        var row = document.createElement("p");
+        row.className = "status-flag-row";
+        row.textContent = f.name + " (" + f.day + ") \u2014 stalled or dropped for 2 sessions in a row. Not a reason to push harder \u2014 check sleep, nutrition, and stress.";
+        flagsWrap.appendChild(row);
+      });
+    }
+    container.appendChild(flagsWrap);
+  }
+
+  window.__renderTrainingStatus = renderTrainingStatus;
+  renderTrainingStatus();
+})();
 
 (function(){
   var LOG_DAYS = {
@@ -5102,8 +5626,15 @@ var WORKOUT_DATA = {
       openBtn.className = "wp-open-btn";
       openBtn.textContent = "Open " + (WORKOUT_LABELS[chosen] || chosen) + " \u2192";
       openBtn.addEventListener("click", function(){
-        var tabBtn = document.getElementById("tab-" + chosen);
-        if (tabBtn) tabBtn.click();
+        var GROUPED = ["day1", "day2", "day4", "day5"];
+        if (GROUPED.indexOf(chosen) > -1){
+          var workoutsTab = document.getElementById("tab-workouts");
+          if (workoutsTab) workoutsTab.click();
+          if (window.__activateSubtab) window.__activateSubtab(chosen);
+        } else {
+          var tabBtn = document.getElementById("tab-" + chosen);
+          if (tabBtn) tabBtn.click();
+        }
       });
       var changeBtn = document.createElement("button");
       changeBtn.type = "button";
@@ -5245,6 +5776,66 @@ var WORKOUT_DATA = {
     return d;
   }
 
+  function tomorrowISO(){
+    var d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function getBinRemindersForTomorrow(){
+    var tomorrow = tomorrowISO();
+    var reminders = [];
+    var tomorrowDay = new Date(tomorrow + "T00:00:00").getDay();
+
+    var isHolidayShiftedAway = BIN_SCHEDULE.residualExceptions.hasOwnProperty(tomorrow);
+    var isExceptionShiftTarget = Object.keys(BIN_SCHEDULE.residualExceptions).some(function(k){
+      return BIN_SCHEDULE.residualExceptions[k] === tomorrow;
+    });
+    if ((tomorrowDay === BIN_SCHEDULE.residualWeekday && !isHolidayShiftedAway) || isExceptionShiftTarget){
+      reminders.push({ type: "residual", text: "Take out the white bags (residual waste) tonight \u2014 collection is tomorrow." });
+    }
+    if (BIN_SCHEDULE.pmcDates.indexOf(tomorrow) > -1){
+      reminders.push({ type: "pmc", text: "Take out the blue bags (PMC) tonight \u2014 collection is tomorrow." });
+    }
+    if (BIN_SCHEDULE.paperDates.indexOf(tomorrow) > -1){
+      reminders.push({ type: "paper", text: "Take out paper & cardboard tonight \u2014 collection is tomorrow." });
+    }
+    return reminders;
+  }
+
+  function buildBinReminderCard(reminder){
+    var todayStr = new Date().toISOString().slice(0, 10);
+    var checkKey = "bins:check:" + todayStr + ":" + reminder.type;
+    var card = document.createElement("div");
+    card.className = "action-check-card";
+    var checked = false;
+    try{ checked = localStorage.getItem(checkKey) === "1"; }catch(e){}
+    if (checked) card.classList.add("is-checked");
+
+    var id = "chk-bin-" + reminder.type;
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = checked;
+    input.id = id;
+
+    var label = document.createElement("label");
+    label.setAttribute("for", id);
+    var titleSpan = document.createElement("span");
+    titleSpan.className = "action-check-title";
+    titleSpan.textContent = "Bin Collection Tomorrow";
+    label.appendChild(titleSpan);
+    label.appendChild(document.createTextNode(reminder.text));
+
+    input.addEventListener("change", function(){
+      try{ localStorage.setItem(checkKey, input.checked ? "1" : "0"); }catch(e){}
+      card.classList.toggle("is-checked", input.checked);
+    });
+
+    card.appendChild(input);
+    card.appendChild(label);
+    return card;
+  }
+
   function renderTodayView(){
     var todayDay = refreshAnchorDisplay();
     var key = String(todayDay);
@@ -5274,10 +5865,14 @@ var WORKOUT_DATA = {
 
     var actionsWrapEl = document.getElementById("today-actions-wrap");
     actionsWrapEl.innerHTML = "";
+    getBinRemindersForTomorrow().forEach(function(reminder){
+      actionsWrapEl.appendChild(buildBinReminderCard(reminder));
+    });
     actionsWrapEl.appendChild(buildActionCheckCard(key, "actionsToday", "Actions Due Today", actions.actionsToday));
     actionsWrapEl.appendChild(buildActionCheckCard(key, "readyTomorrow", "Ready For Tomorrow", actions.readyTomorrow));
   }
   window.__renderTodayView = renderTodayView;
+  window.__getBinRemindersForTomorrow = getBinRemindersForTomorrow;
 
   var todayAnchorEditBtn = document.getElementById("today-anchor-edit-btn");
   if (todayAnchorEditBtn){
@@ -5612,12 +6207,13 @@ var WORKOUT_DATA = {
   var toggles = {
     meals: document.getElementById("notif-meals"),
     actions: document.getElementById("notif-actions"),
-    tomorrow: document.getElementById("notif-tomorrow")
+    tomorrow: document.getElementById("notif-tomorrow"),
+    bins: document.getElementById("notif-bins")
   };
   var SETTINGS_KEY = "notif:settings";
 
   function loadSettings(){
-    var defaults = { enabled: false, meals: true, actions: true, tomorrow: true };
+    var defaults = { enabled: false, meals: true, actions: true, tomorrow: true, bins: true };
     try{
       var raw = localStorage.getItem(SETTINGS_KEY);
       if (raw) return Object.assign(defaults, JSON.parse(raw));
@@ -5630,11 +6226,13 @@ var WORKOUT_DATA = {
   if (toggles.meals) toggles.meals.checked = settings.meals;
   if (toggles.actions) toggles.actions.checked = settings.actions;
   if (toggles.tomorrow) toggles.tomorrow.checked = settings.tomorrow;
+  if (toggles.bins) toggles.bins.checked = settings.bins;
 
   function persistToggleState(){
     settings.meals = toggles.meals.checked;
     settings.actions = toggles.actions.checked;
     settings.tomorrow = toggles.tomorrow.checked;
+    settings.bins = toggles.bins.checked;
     saveSettings(settings);
   }
   Object.keys(toggles).forEach(function(k){
@@ -5720,6 +6318,12 @@ var WORKOUT_DATA = {
     if (settings.tomorrow && actions && actions.readyTomorrow){
       items.push({ time: "21:00", key: "tomorrow:" + dayNum, title: "Tonight, for tomorrow", body: actions.readyTomorrow });
     }
+    if (settings.bins && window.__getBinRemindersForTomorrow){
+      window.__getBinRemindersForTomorrow().forEach(function(reminder){
+        var todayStr = new Date().toISOString().slice(0, 10);
+        items.push({ time: "20:00", key: "bin:" + reminder.type + ":" + todayStr, title: "Bin Collection Tomorrow", body: reminder.text });
+      });
+    }
     return items;
   }
 
@@ -5742,6 +6346,257 @@ var WORKOUT_DATA = {
 
   setInterval(checkSchedule, 30000);
   checkSchedule();
+})();
+
+(function(){
+  var searchInput = document.getElementById("recipe-search-input");
+  var resultsContainer = document.getElementById("recipe-search-results");
+  var browseWrap = document.getElementById("mp-browse-wrap");
+  if (!searchInput) return;
+
+  function tagEl(text, cls){
+    var span = document.createElement("span");
+    span.className = "tag " + cls;
+    span.textContent = text;
+    return span;
+  }
+
+  function buildSearchResultCard(name){
+    var r = RECIPES[name];
+    var card = document.createElement("div");
+    card.className = "mp-meal-card";
+
+    var nameRow = document.createElement("div");
+    nameRow.className = "mp-meal-name";
+    var nameSpan = document.createElement("span");
+    nameSpan.textContent = name;
+    var viewSpan = document.createElement("span");
+    viewSpan.className = "view-recipe";
+    viewSpan.textContent = "View recipe \u25b8";
+    nameRow.appendChild(nameSpan);
+    nameRow.appendChild(viewSpan);
+    card.appendChild(nameRow);
+
+    if (r && r.nutrition){
+      var tagRow = document.createElement("div");
+      tagRow.className = "tag-row";
+      var n = r.nutrition;
+      if (n.kcal != null) tagRow.appendChild(tagEl(n.kcal + " kcal", "tag-primary"));
+      if (n.protein != null) tagRow.appendChild(tagEl("P " + n.protein + "g", "tag-cyan"));
+      card.appendChild(tagRow);
+    }
+
+    var ingP = document.createElement("p");
+    ingP.className = "mp-meal-ingredients";
+    var ingredients = (r && r.ingredients) || [];
+    ingP.textContent = ingredients.slice(0, 4).join("; ") + (ingredients.length > 4 ? "\u2026" : "");
+    card.appendChild(ingP);
+
+    card.addEventListener("click", function(){
+      if (window.__openRecipeModal) window.__openRecipeModal(name);
+    });
+    return card;
+  }
+
+  searchInput.addEventListener("input", function(){
+    var term = searchInput.value.trim().toLowerCase();
+    if (!term){
+      resultsContainer.hidden = true;
+      resultsContainer.innerHTML = "";
+      browseWrap.hidden = false;
+      return;
+    }
+    browseWrap.hidden = true;
+    resultsContainer.hidden = false;
+    resultsContainer.innerHTML = "";
+
+    var matches = Object.keys(RECIPES).filter(function(name){
+      var r = RECIPES[name];
+      var haystack = (name + " " + ((r.ingredients || []).join(" "))).toLowerCase();
+      return haystack.indexOf(term) > -1;
+    });
+
+    if (!matches.length){
+      var noneP = document.createElement("p");
+      noneP.className = "data-tools-note";
+      noneP.textContent = "No recipes match \u201c" + searchInput.value + "\u201d.";
+      resultsContainer.appendChild(noneP);
+      return;
+    }
+    matches.forEach(function(name){ resultsContainer.appendChild(buildSearchResultCard(name)); });
+  });
+})();
+
+(function(){
+  var toggles = document.querySelectorAll(".ref-toggle");
+  if (!toggles.length) return;
+
+  var rendered = { emergency: false, adjustment: false, heatscale: false };
+
+  function renderEmergencyLunches(){
+    var container = document.getElementById("ref-emergency");
+    var introP = document.createElement("p");
+    introP.className = "data-tools-note";
+    introP.textContent = EMERGENCY_LUNCHES.intro;
+    container.appendChild(introP);
+
+    EMERGENCY_LUNCHES.items.forEach(function(item){
+      var card = document.createElement("div");
+      card.className = "setup-day-card";
+      var h4 = document.createElement("h4");
+      h4.className = "ref-item-title";
+      h4.textContent = item.template;
+      card.appendChild(h4);
+
+      [["Buy", item.buy], ["Assembly", item.assembly], ["Approx. macros", item.macros], ["Adjustments", item.adjustments]].forEach(function(pair){
+        var p = document.createElement("p");
+        var titleSpan = document.createElement("span");
+        titleSpan.className = "action-check-title";
+        titleSpan.textContent = pair[0];
+        p.appendChild(titleSpan);
+        p.appendChild(document.createTextNode(pair[1]));
+        card.appendChild(p);
+      });
+      container.appendChild(card);
+    });
+  }
+
+  function renderAdjustmentGuide(){
+    var container = document.getElementById("ref-adjustment");
+
+    var h4a = document.createElement("h4");
+    h4a.className = "ref-item-title";
+    h4a.textContent = "Review After Two Weeks";
+    container.appendChild(h4a);
+
+    var ul1 = document.createElement("ul");
+    ul1.className = "prog-list";
+    ADJUSTMENT_GUIDE.reviewBullets.forEach(function(b){
+      var li = document.createElement("li");
+      li.textContent = b;
+      ul1.appendChild(li);
+    });
+    container.appendChild(ul1);
+
+    var tableWrap = document.createElement("div");
+    tableWrap.style.marginTop = "14px";
+    ADJUSTMENT_GUIDE.reviewTable.forEach(function(row){
+      var rowDiv = document.createElement("div");
+      rowDiv.className = "adj-row";
+      var p1 = document.createElement("p");
+      p1.className = "adj-pattern";
+      p1.textContent = row.pattern;
+      var p2 = document.createElement("p");
+      p2.className = "adj-interp";
+      p2.textContent = row.interpretation;
+      var p3 = document.createElement("p");
+      p3.className = "adj-action";
+      var strong = document.createElement("strong");
+      strong.textContent = "Action: ";
+      p3.appendChild(strong);
+      p3.appendChild(document.createTextNode(row.action));
+      rowDiv.appendChild(p1);
+      rowDiv.appendChild(p2);
+      rowDiv.appendChild(p3);
+      tableWrap.appendChild(rowDiv);
+    });
+    container.appendChild(tableWrap);
+
+    var h4b = document.createElement("h4");
+    h4b.className = "ref-item-title";
+    h4b.style.marginTop = "18px";
+    h4b.textContent = "Modify An Individual Day";
+    container.appendChild(h4b);
+
+    var ul2 = document.createElement("ul");
+    ul2.className = "prog-list";
+    ADJUSTMENT_GUIDE.modifyBullets.forEach(function(b){
+      var li = document.createElement("li");
+      li.textContent = b;
+      ul2.appendChild(li);
+    });
+    container.appendChild(ul2);
+
+    var h4c = document.createElement("h4");
+    h4c.className = "ref-item-title";
+    h4c.style.marginTop = "18px";
+    h4c.textContent = "Training-Side Priorities";
+    container.appendChild(h4c);
+
+    var ul3 = document.createElement("ul");
+    ul3.className = "prog-list";
+    ADJUSTMENT_GUIDE.priorityBullets.forEach(function(b){
+      var li = document.createElement("li");
+      li.textContent = b;
+      ul3.appendChild(li);
+    });
+    container.appendChild(ul3);
+  }
+
+  function renderHeatScale(){
+    var container = document.getElementById("ref-heatscale");
+
+    var introP = document.createElement("p");
+    introP.className = "data-tools-note";
+    introP.textContent = HEAT_SCALE.intro;
+    container.appendChild(introP);
+
+    var tableWrap = document.createElement("div");
+    tableWrap.className = "rir-table";
+    HEAT_SCALE.heatTable.forEach(function(row){
+      var rowDiv = document.createElement("div");
+      rowDiv.className = "rir-row";
+      var tag = document.createElement("span");
+      tag.className = "tag tag-primary";
+      tag.textContent = row.setting;
+      var copy = document.createElement("div");
+      copy.className = "rir-copy";
+      var strong = document.createElement("strong");
+      strong.textContent = row.meaning;
+      copy.appendChild(strong);
+      copy.appendChild(document.createTextNode(" \u2014 " + row.use));
+      rowDiv.appendChild(tag);
+      rowDiv.appendChild(copy);
+      tableWrap.appendChild(rowDiv);
+    });
+    container.appendChild(tableWrap);
+
+    var h4 = document.createElement("h4");
+    h4.className = "ref-item-title";
+    h4.style.marginTop = "16px";
+    h4.textContent = "Core Seasoning Set";
+    container.appendChild(h4);
+
+    var ul = document.createElement("ul");
+    ul.className = "prog-list";
+    HEAT_SCALE.seasoningBullets.forEach(function(b){
+      var li = document.createElement("li");
+      li.textContent = b;
+      ul.appendChild(li);
+    });
+    container.appendChild(ul);
+  }
+
+  toggles.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var targetId = btn.getAttribute("data-reftarget");
+      var target = document.getElementById(targetId);
+      if (!target) return;
+      var isHidden = target.hasAttribute("hidden");
+      if (isHidden){
+        if (targetId === "ref-emergency" && !rendered.emergency){ renderEmergencyLunches(); rendered.emergency = true; }
+        if (targetId === "ref-adjustment" && !rendered.adjustment){ renderAdjustmentGuide(); rendered.adjustment = true; }
+        if (targetId === "ref-heatscale" && !rendered.heatscale){ renderHeatScale(); rendered.heatscale = true; }
+        target.removeAttribute("hidden");
+        btn.setAttribute("aria-expanded", "true");
+        btn.querySelector(".ref-toggle-icon").textContent = "\u25b4";
+      } else {
+        target.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+        btn.querySelector(".ref-toggle-icon").textContent = "\u25be";
+      }
+    });
+  });
 })();
 </script>
 </body>
