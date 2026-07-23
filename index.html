@@ -500,12 +500,13 @@
   <nav class="tabs" role="tablist" aria-label="Program sections">
     <button type="button" class="tab active" role="tab" id="tab-today" data-tab="today" aria-selected="true" aria-controls="panel-today"><span class="tab-num">00</span><span class="tab-label">Today</span></button>
     <button type="button" class="tab" role="tab" id="tab-meals" data-tab="meals" aria-selected="false" aria-controls="panel-meals"><span class="tab-num">01</span><span class="tab-label">Meals</span></button>
-    <button type="button" class="tab" role="tab" id="tab-grocery" data-tab="grocery" aria-selected="false" aria-controls="panel-grocery"><span class="tab-num">02</span><span class="tab-label">Grocery</span></button>
-    <button type="button" class="tab" role="tab" id="tab-warmup" data-tab="warmup" aria-selected="false" aria-controls="panel-warmup"><span class="tab-num">03</span><span class="tab-label">Warm-Up</span></button>
-    <button type="button" class="tab" role="tab" id="tab-workouts" data-tab="workouts" aria-selected="false" aria-controls="panel-workouts"><span class="tab-num">04</span><span class="tab-label">Workouts</span></button>
-    <button type="button" class="tab" role="tab" id="tab-day3" data-tab="day3" aria-selected="false" aria-controls="panel-day3"><span class="tab-num">05</span><span class="tab-label">Rest / Swim</span></button>
-    <button type="button" class="tab" role="tab" id="tab-recovery" data-tab="recovery" aria-selected="false" aria-controls="panel-recovery"><span class="tab-num">06</span><span class="tab-label">Recovery</span></button>
-    <button type="button" class="tab" role="tab" id="tab-progression" data-tab="progression" aria-selected="false" aria-controls="panel-progression"><span class="tab-num">07</span><span class="tab-label">Progression</span></button>
+    <button type="button" class="tab" role="tab" id="tab-snacks" data-tab="snacks" aria-selected="false" aria-controls="panel-snacks"><span class="tab-num">02</span><span class="tab-label">Snacks</span></button>
+    <button type="button" class="tab" role="tab" id="tab-grocery" data-tab="grocery" aria-selected="false" aria-controls="panel-grocery"><span class="tab-num">03</span><span class="tab-label">Grocery</span></button>
+    <button type="button" class="tab" role="tab" id="tab-warmup" data-tab="warmup" aria-selected="false" aria-controls="panel-warmup"><span class="tab-num">04</span><span class="tab-label">Warm-Up</span></button>
+    <button type="button" class="tab" role="tab" id="tab-workouts" data-tab="workouts" aria-selected="false" aria-controls="panel-workouts"><span class="tab-num">05</span><span class="tab-label">Workouts</span></button>
+    <button type="button" class="tab" role="tab" id="tab-day3" data-tab="day3" aria-selected="false" aria-controls="panel-day3"><span class="tab-num">06</span><span class="tab-label">Rest / Swim</span></button>
+    <button type="button" class="tab" role="tab" id="tab-recovery" data-tab="recovery" aria-selected="false" aria-controls="panel-recovery"><span class="tab-num">07</span><span class="tab-label">Recovery</span></button>
+    <button type="button" class="tab" role="tab" id="tab-progression" data-tab="progression" aria-selected="false" aria-controls="panel-progression"><span class="tab-num">08</span><span class="tab-label">Progression</span></button>
   </nav>
 
   <main class="panels">
@@ -1381,6 +1382,18 @@
       </div>
     </section>
 
+    <section id="panel-snacks" class="panel" role="tabpanel" aria-labelledby="tab-snacks" hidden>
+      <div class="panel-head">
+        <p class="eyebrow">Nutrition</p>
+        <h2>Snacks</h2>
+        <p class="panel-sub">Sorted by the kind of day you're having</p>
+      </div>
+      <div class="wp-options" id="snacks-filter">
+        <button type="button" class="wp-option-btn active" data-snackfilter="all">All</button>
+      </div>
+      <div id="snacks-categories"></div>
+    </section>
+
     <section id="panel-grocery" class="panel" role="tabpanel" aria-labelledby="tab-grocery" hidden>
       <div class="panel-head">
         <p class="eyebrow">Shopping</p>
@@ -1564,7 +1577,7 @@ var MEALPLAN_DAYS = {
   "week": 1,
   "weekday": "Monday",
   "location": "Office",
-  "suggestedLoad": "Standard resistance or 30-45 min runApproximate daily total: 2688 kcal | P 158 g | C 356 g | F 71 g | fibre 52 g",
+  "suggestedLoad": "Standard resistance or 30-45 min run",
   "totals": {
    "kcal": 2688,
    "protein": 158,
@@ -1625,7 +1638,7 @@ var MEALPLAN_DAYS = {
   "week": 1,
   "weekday": "Tuesday",
   "location": "Home",
-  "suggestedLoad": "Resistance/hybridApproximate daily total: 2710 kcal | P 150 g | C 400 g | F 59 g | fibre 53 g",
+  "suggestedLoad": "Resistance/hybrid",
   "totals": {
    "kcal": 2710,
    "protein": 150,
@@ -1799,7 +1812,7 @@ var MEALPLAN_DAYS = {
   "week": 1,
   "weekday": "Friday",
   "location": "Office",
-  "suggestedLoad": "Standard run or resistanceApproximate daily total: 2657 kcal | P 147 g | C 379 g | F 65 g | fibre 46 g",
+  "suggestedLoad": "Standard run or resistance",
   "totals": {
    "kcal": 2657,
    "protein": 147,
@@ -1851,7 +1864,7 @@ var MEALPLAN_DAYS = {
   "week": 1,
   "weekday": "Saturday",
   "location": "Home",
-  "suggestedLoad": "Racket sport >90 min or long/double sessionApproximate daily total: 3060 kcal | P 163 g | C 431 g | F 76 g | fibre 48 g",
+  "suggestedLoad": "Racket sport >90 min or long/double session",
   "totals": {
    "kcal": 3060,
    "protein": 163,
@@ -1912,7 +1925,7 @@ var MEALPLAN_DAYS = {
   "week": 1,
   "weekday": "Sunday",
   "location": "Home",
-  "suggestedLoad": "Rest or easy recoveryApproximate daily total: 2524 kcal | P 143 g | C 316 g | F 75 g | fibre 44 g",
+  "suggestedLoad": "Rest or easy recovery",
   "totals": {
    "kcal": 2524,
    "protein": 143,
@@ -1964,7 +1977,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Monday",
   "location": "Office",
-  "suggestedLoad": "Standard resistance or runApproximate daily total: 2736 kcal | P 160 g | C 380 g | F 66 g | fibre 50 g",
+  "suggestedLoad": "Standard resistance or run",
   "totals": {
    "kcal": 2736,
    "protein": 160,
@@ -2025,7 +2038,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Tuesday",
   "location": "Home",
-  "suggestedLoad": "Resistance/hybridApproximate daily total: 2838 kcal | P 146 g | C 389 g | F 80 g | fibre 52 g",
+  "suggestedLoad": "Resistance/hybrid",
   "totals": {
    "kcal": 2838,
    "protein": 146,
@@ -2077,7 +2090,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Wednesday",
   "location": "Office",
-  "suggestedLoad": "Easy-moderate run or resistanceApproximate daily total: 2782 kcal | P 149 g | C 384 g | F 74 g | fibre 52 g",
+  "suggestedLoad": "Easy-moderate run or resistance",
   "totals": {
    "kcal": 2782,
    "protein": 149,
@@ -2129,7 +2142,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Thursday",
   "location": "Home",
-  "suggestedLoad": "Resistance/hybridApproximate daily total: 2751 kcal | P 150 g | C 385 g | F 72 g | fibre 55 g",
+  "suggestedLoad": "Resistance/hybrid",
   "totals": {
    "kcal": 2751,
    "protein": 150,
@@ -2181,7 +2194,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Friday",
   "location": "Office",
-  "suggestedLoad": "Standard run or resistanceApproximate daily total: 2704 kcal | P 159 g | C 367 g | F 66 g | fibre 52 g",
+  "suggestedLoad": "Standard run or resistance",
   "totals": {
    "kcal": 2704,
    "protein": 159,
@@ -2242,7 +2255,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Saturday",
   "location": "Home",
-  "suggestedLoad": "Two sessions or long racket dayApproximate daily total: 3115 kcal | P 161 g | C 434 g | F 84 g | fibre 61 g",
+  "suggestedLoad": "Two sessions or long racket day",
   "totals": {
    "kcal": 3115,
    "protein": 161,
@@ -2321,7 +2334,7 @@ var MEALPLAN_DAYS = {
   "week": 2,
   "weekday": "Sunday",
   "location": "Home",
-  "suggestedLoad": "Rest or easy recoveryApproximate daily total: 2476 kcal | P 159 g | C 287 g | F 77 g | fibre 55 g",
+  "suggestedLoad": "Rest or easy recovery",
   "totals": {
    "kcal": 2476,
    "protein": 159,
@@ -4531,6 +4544,26 @@ var BIN_SCHEDULE = {
     "2026-07-06","2026-08-03","2026-08-31","2026-09-28","2026-10-26","2026-11-23","2026-12-21"
   ]
 };
+
+// Snacks grouped by the actual activity type of the days they appear on in the
+// 14-day plan (Part D), using each day's own "Suggested load" text. A few snacks
+// recur across categories because the plan itself reuses them across similar days.
+var SNACK_CATEGORIES = [
+  { label: "Office Day", sub: "Standard resistance or 30\u201345 min run",
+    snacks: ["Office banana + peach skyr", "Milk and dark chocolate", "Banana and dark chocolate"] },
+  { label: "Office + Easy Session", sub: "Easy-moderate run or resistance",
+    snacks: ["Office apple + peach skyr", "Skyr kiwi walnuts"] },
+  { label: "Office + Standard Session", sub: "Standard run or resistance",
+    snacks: ["Banana toast honey preworkout", "Milk and dark chocolate"] },
+  { label: "Home + Hybrid Training", sub: "Resistance/hybrid",
+    snacks: ["Banana toast honey preworkout", "Apple peanut butter toast"] },
+  { label: "Double / Long Session", sub: "Racket sport, two sessions, or a long day",
+    snacks: ["Banana toast honey preworkout", "Clear whey and banana", "Bread hummus cucumber", "Diluted juice sports drink", "Banana and dark chocolate"] },
+  { label: "Rest / Recovery Day", sub: "Rest or easy recovery",
+    snacks: ["Carrots cucumber hummus", "Popcorn and plain skyr", "Planned dark chocolate"] },
+  { label: "Other Snacks", sub: "Not tied to a specific day in the plan",
+    snacks: ["Chocolate berry skyr", "Milk oats honey", "Vanilla whey milk shaker"] }
+];
 </script>
 <script>
 (function(){
@@ -6597,6 +6630,107 @@ var WORKOUT_DATA = {
       }
     });
   });
+})();
+
+(function(){
+  var container = document.getElementById("snacks-categories");
+  if (!container) return;
+
+  function tagEl(text, cls){
+    var span = document.createElement("span");
+    span.className = "tag " + cls;
+    span.textContent = text;
+    return span;
+  }
+
+  function buildSnackCard(name){
+    var r = RECIPES[name];
+    var card = document.createElement("div");
+    card.className = "mp-meal-card";
+
+    var nameRow = document.createElement("div");
+    nameRow.className = "mp-meal-name";
+    var nameSpan = document.createElement("span");
+    nameSpan.textContent = name;
+    var viewSpan = document.createElement("span");
+    viewSpan.className = "view-recipe";
+    viewSpan.textContent = r ? "View recipe \u25b8" : "";
+    nameRow.appendChild(nameSpan);
+    nameRow.appendChild(viewSpan);
+    card.appendChild(nameRow);
+
+    if (r && r.nutrition){
+      var tagRow = document.createElement("div");
+      tagRow.className = "tag-row";
+      var n = r.nutrition;
+      if (n.kcal != null) tagRow.appendChild(tagEl(n.kcal + " kcal", "tag-primary"));
+      if (n.protein != null) tagRow.appendChild(tagEl("P " + n.protein + "g", "tag-cyan"));
+      if (n.carbs != null) tagRow.appendChild(tagEl("C " + n.carbs + "g", "tag-cyan"));
+      if (n.fat != null) tagRow.appendChild(tagEl("F " + n.fat + "g", "tag-cyan"));
+      card.appendChild(tagRow);
+    }
+
+    if (r && r.ingredients && r.ingredients.length){
+      var ingP = document.createElement("p");
+      ingP.className = "mp-meal-ingredients";
+      ingP.textContent = r.ingredients.join("; ");
+      card.appendChild(ingP);
+    }
+
+    card.addEventListener("click", function(){
+      if (window.__openRecipeModal) window.__openRecipeModal(name);
+    });
+    return card;
+  }
+
+  function renderSnacksTab(filterIdx){
+    container.innerHTML = "";
+    SNACK_CATEGORIES.forEach(function(cat, idx){
+      if (filterIdx !== "all" && String(idx) !== String(filterIdx)) return;
+
+      var groupDiv = document.createElement("div");
+      groupDiv.className = "progress-group";
+
+      var header = document.createElement("div");
+      header.className = "mp-day-header";
+      var h3 = document.createElement("h3");
+      h3.textContent = cat.label;
+      var sub = document.createElement("p");
+      sub.className = "panel-sub";
+      sub.textContent = cat.sub;
+      header.appendChild(h3);
+      header.appendChild(sub);
+      groupDiv.appendChild(header);
+
+      var listDiv = document.createElement("div");
+      listDiv.className = "mp-meal-list";
+      cat.snacks.forEach(function(name){ listDiv.appendChild(buildSnackCard(name)); });
+      groupDiv.appendChild(listDiv);
+
+      container.appendChild(groupDiv);
+    });
+  }
+
+  var filterWrap = document.getElementById("snacks-filter");
+  if (filterWrap){
+    SNACK_CATEGORIES.forEach(function(cat, idx){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "wp-option-btn";
+      btn.setAttribute("data-snackfilter", String(idx));
+      btn.textContent = cat.label;
+      filterWrap.appendChild(btn);
+    });
+
+    filterWrap.querySelectorAll(".wp-option-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        filterWrap.querySelectorAll(".wp-option-btn").forEach(function(b){ b.classList.toggle("active", b === btn); });
+        renderSnacksTab(btn.getAttribute("data-snackfilter"));
+      });
+    });
+  }
+
+  renderSnacksTab("all");
 })();
 </script>
 </body>
