@@ -212,6 +212,7 @@
   .ri-dosage{font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);white-space:nowrap;}
 
   .prog-section{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;}
+  .menu-planner{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;}
   .prog-section h3{font-family:var(--font-display);font-weight:600;font-size:1.1rem;margin:0 0 12px;color:var(--ink);letter-spacing:0;}
   .prog-intro{color:var(--ink-muted);margin:0 0 10px;font-size:0.9rem;}
   .prog-list{margin:0;padding-left:20px;color:var(--ink-muted);font-size:0.92rem;line-height:1.6;}
@@ -374,6 +375,16 @@
   .status-clear{color:var(--ink-muted);font-size:0.87rem;font-style:italic;margin:0;}
   .status-flag-row{background:var(--amber-soft);border-left:3px solid var(--amber);padding:8px 12px;border-radius:3px;font-size:0.84rem;color:var(--ink);line-height:1.5;margin-bottom:8px;}
   .status-flag-row:last-child{margin-bottom:0;}
+
+  .menu-day-card{background:var(--panel-alt);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;}
+  .menu-day-card:last-child{margin-bottom:0;}
+  .menu-day-label{font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--cyan);margin:0 0 10px;}
+  .menu-slot{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+  .menu-slot:last-child{margin-bottom:0;}
+  .menu-slot-label{font-family:var(--font-mono);font-size:0.76rem;color:var(--ink-muted);min-width:52px;}
+  .menu-slot-select{flex:1;min-width:160px;font-family:var(--font-body);font-size:0.86rem;padding:8px 10px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);}
+  .menu-slot-fixed{flex:1;font-size:0.86rem;color:var(--ink-muted);font-style:italic;}
+  .menu-slot-warn{font-family:var(--font-mono);font-size:0.7rem;color:var(--amber);width:100%;margin:2px 0 0 62px;}
   @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 
   /* ---- meal plan + grocery shared controls ---- */
@@ -441,6 +452,7 @@
   .grocery-item-flag{display:inline-block;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.04em;color:var(--amber);border:1px solid rgba(255,145,66,0.5);background:var(--amber-soft);padding:2px 6px;border-radius:3px;margin-left:8px;vertical-align:middle;}
   .grocery-item-qty{font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-muted);margin:4px 0 0;}
   .grocery-item-detail{font-size:0.82rem;color:var(--ink-faint);margin:4px 0 0;line-height:1.5;}
+  .grocery-item-carryover{font-size:0.82rem;color:var(--cyan);margin:6px 0 0;line-height:1.5;font-style:italic;}
   .grocery-item.is-checked .grocery-item-name{color:var(--ink-faint);text-decoration:line-through;}
   .grocery-item.is-checked{opacity:0.6;}
 
@@ -1326,6 +1338,17 @@
         <p class="panel-sub">Browse any day's recipes · ~2,740 kcal/day avg · 145–160g protein/day</p>
       </div>
 
+      <div class="menu-planner corner-ticks">
+        <h3>Reorder This Week's Dinners</h3>
+        <p class="prog-intro">Change any dinner below — the next day's lunch updates automatically, and thaw/prep reminders on the Today tab adjust to match. A dinner can only move to its cook day or later (it can't be eaten before it's cooked).</p>
+        <div class="wp-options" id="menu-week-toggle">
+          <button type="button" class="wp-option-btn active" data-menuweek="1">Week 1</button>
+          <button type="button" class="wp-option-btn" data-menuweek="2">Week 2</button>
+        </div>
+        <div id="menu-planner-days"></div>
+        <button type="button" id="menu-reset-btn" class="status-reset-btn">Reset Week to Original Plan</button>
+      </div>
+
       <div class="recipe-search-wrap">
         <input type="text" id="recipe-search-input" class="recipe-search-input" placeholder="Search all recipes by name or ingredient…">
       </div>
@@ -1344,7 +1367,7 @@
 
       <div class="notif-settings corner-ticks">
         <p class="section-label">Notifications</p>
-        <p class="data-tools-note">Reminders fire while this app is open, even backgrounded — not once it's fully closed. Schedule: breakfast 06:30 office days / 08:30 other days · lunch 12:30 · snacks at their best time per the plan, collapsed to one 18:00 ping on office days · dinner 19:30 · prep &amp; cooking 19:00 · tomorrow's prep 21:00 · bin collection 20:00 the evening before.</p>
+        <p class="data-tools-note">Reminders fire while this app is open, even backgrounded — not once it's fully closed. Schedule: breakfast 06:30 office days / 08:30 other days · lunch 12:30 · snacks at their best time per the plan, collapsed to one 18:00 ping on office days · dinner 19:30 · prep &amp; cooking 19:00 · tomorrow's prep 21:00 (includes thaw reminders that follow any changes you make in "Reorder This Week's Dinners") · bin collection 20:00 the evening before.</p>
         <button type="button" id="notif-enable-btn" class="log-save-btn">Enable Notifications</button>
         <p id="notif-status" class="log-status" aria-live="polite"></p>
         <div class="notif-toggles">
@@ -1579,10 +1602,10 @@ var MEALPLAN_DAYS = {
   "location": "Office",
   "suggestedLoad": "Standard resistance or 30-45 min run",
   "totals": {
-   "kcal": 2688,
-   "protein": 158,
-   "carbs": 356,
-   "fat": 71,
+   "kcal": 2708,
+   "protein": 161,
+   "carbs": 351,
+   "fat": 73,
    "fibre": 52
   },
   "meals": [
@@ -1615,12 +1638,12 @@ var MEALPLAN_DAYS = {
    },
    {
     "timing": "Dinner after training",
-    "name": "Turkey lentil bolognese",
-    "ingredients": "100 g lean turkey mince, raw; 120 g canned lentils, drained; 90 g dry pasta; 200 ml passata; 50 g onion; 75 g carrot; 75 g courgette; 5 g (about 5 ml) rapeseed oil; 10 g Parmesan",
-    "kcal": 805,
-    "protein": 50,
-    "carbs": 107,
-    "fat": 18
+    "name": "Moroccan Spiced Beef-Pork Mince with Couscous",
+    "ingredients": "150 g beef-pork mince blend (40/60), raw; 130 g dry couscous; 50 g canned chopped tomatoes; 75 g courgette; 40 g onion; 50 g 0% Greek-style yogurt; 5 g (about 5 ml) rapeseed oil; cumin, paprika, cinnamon",
+    "kcal": 825,
+    "protein": 53,
+    "carbs": 102,
+    "fat": 20
    },
    {
     "timing": "Optional evening snack",
@@ -1640,10 +1663,10 @@ var MEALPLAN_DAYS = {
   "location": "Home",
   "suggestedLoad": "Resistance/hybrid",
   "totals": {
-   "kcal": 2710,
-   "protein": 150,
-   "carbs": 400,
-   "fat": 59,
+   "kcal": 2730,
+   "protein": 153,
+   "carbs": 395,
+   "fat": 61,
    "fibre": 53
   },
   "meals": [
@@ -1658,12 +1681,12 @@ var MEALPLAN_DAYS = {
    },
    {
     "timing": "Lunch (12:00-13:00)",
-    "name": "Turkey lentil bolognese",
-    "ingredients": "100 g lean turkey mince, raw; 120 g canned lentils, drained; 90 g dry pasta; 200 ml passata; 50 g onion; 75 g carrot; 75 g courgette; 5 g (about 5 ml) rapeseed oil; 10 g Parmesan",
-    "kcal": 805,
-    "protein": 50,
-    "carbs": 107,
-    "fat": 18
+    "name": "Moroccan Spiced Beef-Pork Mince with Couscous",
+    "ingredients": "150 g beef-pork mince blend (40/60), raw; 130 g dry couscous; 50 g canned chopped tomatoes; 75 g courgette; 40 g onion; 50 g 0% Greek-style yogurt; 5 g (about 5 ml) rapeseed oil; cumin, paprika, cinnamon",
+    "kcal": 825,
+    "protein": 53,
+    "carbs": 102,
+    "fat": 20
    },
    {
     "timing": "Pre-workout (60-120 min)",
@@ -1814,10 +1837,10 @@ var MEALPLAN_DAYS = {
   "location": "Office",
   "suggestedLoad": "Standard run or resistance",
   "totals": {
-   "kcal": 2657,
-   "protein": 147,
-   "carbs": 379,
-   "fat": 65,
+   "kcal": 2634,
+   "protein": 152,
+   "carbs": 380,
+   "fat": 59,
    "fibre": 46
   },
   "meals": [
@@ -1850,12 +1873,12 @@ var MEALPLAN_DAYS = {
    },
    {
     "timing": "Dinner after training",
-    "name": "Homemade burger and wedges",
-    "ingredients": "120 g lean beef mince, raw; 90 g wholegrain burger bun; 20 g burger cheese slice; 300 g potatoes; 150 g mixed salad leaves; 10 g (about 10 ml) rapeseed oil; 15 g ketchup; 10 g mustard",
-    "kcal": 828,
-    "protein": 45,
-    "carbs": 106,
-    "fat": 24
+    "name": "Turkey lentil bolognese",
+    "ingredients": "100 g lean turkey mince, raw; 120 g canned lentils, drained; 90 g dry pasta; 200 ml passata; 50 g onion; 75 g carrot; 75 g courgette; 5 g (about 5 ml) rapeseed oil; 10 g Parmesan",
+    "kcal": 805,
+    "protein": 50,
+    "carbs": 107,
+    "fat": 18
    }
   ],
   "workoutDay": "day5"
@@ -1911,8 +1934,8 @@ var MEALPLAN_DAYS = {
    },
    {
     "timing": "Dinner after training",
-    "name": "Restaurant pizza meal (estimate)",
-    "ingredients": "1 individual approximately 30 cm thin-crust pizza with tomato base, mozzarella, chicken or lean ham, and vegetables; request no shellfish/seafood, mushrooms, or extra cheese. Restaurant size and oil use vary substantially.",
+    "name": "Weekend Flex Meal",
+    "ingredients": "Your choice this week: Homemade Pizza (backup) or a restaurant meal — see the recipe for both.",
     "kcal": 950,
     "protein": 35,
     "carbs": 120,
@@ -1927,10 +1950,10 @@ var MEALPLAN_DAYS = {
   "location": "Home",
   "suggestedLoad": "Rest or easy recovery",
   "totals": {
-   "kcal": 2524,
-   "protein": 143,
-   "carbs": 316,
-   "fat": 75,
+   "kcal": 2501,
+   "protein": 148,
+   "carbs": 317,
+   "fat": 69,
    "fibre": 44
   },
   "meals": [
@@ -1945,12 +1968,12 @@ var MEALPLAN_DAYS = {
    },
    {
     "timing": "Lunch (12:00-13:00)",
-    "name": "Homemade burger and wedges",
-    "ingredients": "120 g lean beef mince, raw; 90 g wholegrain burger bun; 20 g burger cheese slice; 300 g potatoes; 150 g mixed salad leaves; 10 g (about 10 ml) rapeseed oil; 15 g ketchup; 10 g mustard",
-    "kcal": 828,
-    "protein": 45,
-    "carbs": 106,
-    "fat": 24
+    "name": "Turkey lentil bolognese",
+    "ingredients": "100 g lean turkey mince, raw; 120 g canned lentils, drained; 90 g dry pasta; 200 ml passata; 50 g onion; 75 g carrot; 75 g courgette; 5 g (about 5 ml) rapeseed oil; 10 g Parmesan",
+    "kcal": 805,
+    "protein": 50,
+    "carbs": 107,
+    "fat": 18
    },
    {
     "timing": "Pre-workout (60-120 min)",
@@ -3452,13 +3475,13 @@ var MEALPLAN_ACTIONS = {
  },
  "1": {
   "label": "Day 1 - Monday",
-  "mealsSummary": "Peach oats; chicken traybake; turkey lentil bolognese; office banana + skyr; optional milk + chocolate.",
-  "actionsToday": "Cook 3 bolognese portions. Pack Day 2 lunch; freeze one flat for Day 6. Thaw 240 g chicken breast overnight.",
+  "mealsSummary": "Peach oats; chicken traybake; Moroccan spiced beef-pork mince with couscous; office banana + skyr; optional milk + chocolate.",
+  "actionsToday": "Cook 2 portions of the Moroccan spiced beef-pork mince with couscous for tonight's dinner; pack the second for tomorrow's lunch. Cook 3 bolognese portions and freeze all three flat: one for Day 5, one for Day 6, one for Day 7. Thaw 240 g chicken breast overnight.",
   "readyTomorrow": "Day 2 breakfast is porridge; no night-before breakfast prep."
  },
  "2": {
   "label": "Day 2 - Tuesday",
-  "mealsSummary": "Apple-walnut porridge; bolognese; chicken fajita rice bowl; banana toast if training.",
+  "mealsSummary": "Apple-walnut porridge; Moroccan spiced beef-pork mince with couscous; chicken fajita rice bowl; banana toast if training.",
   "actionsToday": "Cook 2 fajita bowls; pack Day 3 lunch. Prepare Day 3 berry overnight oats. Thaw 250 g beef overnight.",
   "readyTomorrow": "Training skipped: omit banana toast first."
  },
@@ -3471,24 +3494,24 @@ var MEALPLAN_ACTIONS = {
  "4": {
   "label": "Day 4 - Thursday",
   "mealsSummary": "Chocolate-banana porridge; chili; lemon Parmesan chicken orzo; apple-PB toast; optional chocolate.",
-  "actionsToday": "Cook 2 orzo portions; pack Day 5 lunch. Shape burger patties if useful. Prepare Day 5 peach-apricot overnight oats. Thaw 240 g beef overnight.",
+  "actionsToday": "Cook 2 orzo portions; pack Day 5 lunch. Thaw a bolognese portion overnight for tomorrow's dinner. Prepare Day 5 peach-apricot overnight oats.",
   "readyTomorrow": "Keep Friday lunch and oats refrigerated."
  },
  "5": {
   "label": "Day 5 - Friday",
-  "mealsSummary": "Peach oats; chicken orzo; burger and wedges; banana toast; optional milk + chocolate.",
-  "actionsToday": "Cook 2 burgers; refrigerate the second portion for Day 7 lunch. Move frozen bolognese to the fridge for Day 6.",
+  "mealsSummary": "Peach oats; chicken orzo; thawed bolognese; banana toast; optional milk + chocolate.",
+  "actionsToday": "Thaw the second bolognese portion overnight for tomorrow's lunch.",
   "readyTomorrow": "High hunger: add fruit/skyr rather than enlarging the flex meal."
  },
  "6": {
   "label": "Day 6 - Saturday",
-  "mealsSummary": "Banana-oat pancakes; thawed bolognese; planned restaurant pizza; long-session snacks as needed.",
-  "actionsToday": "Use the high-activity snack guide. Thaw 240 g turkey mince overnight for Day 7 meatballs.",
-  "readyTomorrow": "Keep the pizza as one planned meal, not an all-day cheat day."
+  "mealsSummary": "Banana-oat pancakes; thawed bolognese; weekend flex meal (pizza or restaurant); long-session snacks as needed.",
+  "actionsToday": "Use the high-activity snack guide. Choose tonight's flex meal: homemade pizza or a restaurant. Thaw 240 g turkey mince overnight for Day 7 meatballs. Thaw the third bolognese portion overnight for tomorrow's lunch.",
+  "readyTomorrow": "Keep tonight's flex meal as one planned treat, not an all-day cheat day."
  },
  "7": {
   "label": "Day 7 - Sunday",
-  "mealsSummary": "French toast; second burger; turkey meatball pasta; carrots/cucumber/hummus.",
+  "mealsSummary": "French toast; second bolognese; turkey meatball pasta; carrots/cucumber/hummus.",
   "actionsToday": "Cook 2 meatball-pasta portions; pack Day 8 lunch. Prepare Day 8 berry overnight oats.",
   "readyTomorrow": "Reset containers and review Week 2 shopping."
  },
@@ -3565,16 +3588,23 @@ var GROCERY = {
      {
       "item": "lean turkey mince, raw",
       "flag": "FREEZE ON ARRIVAL",
-      "quantity": "use about 540 g; buy 400-500 g pack",
+      "quantity": "use about 540 g; buy 600-700 g pack",
       "usedIn": "Turkey lentil bolognese, Turkey meatballs tomato pasta",
       "storage": "Freeze as two labelled packs: 300 g for Monday bolognese and 240 g for Sunday meatballs. Thaw in the refrigerator Sunday night and Saturday night. Mostly/fully consumed."
      },
      {
       "item": "lean beef mince, raw",
       "flag": "FREEZE ON ARRIVAL",
-      "quantity": "use about 490 g; buy 500-600 g pack",
-      "usedIn": "Beef bean chili with rice, Homemade burger and wedges",
-      "storage": "Freeze as two labelled packs: 250 g for Wednesday chili and 240 g for Friday burgers. Thaw in the refrigerator Tuesday night and Thursday night. Mostly/fully consumed."
+      "quantity": "use about 250 g; buy 300-400 g pack",
+      "usedIn": "Beef bean chili with rice",
+      "storage": "Freeze as one labelled 250 g pack for Wednesday chili. Thaw in the refrigerator Tuesday night. Mostly/fully consumed."
+     },
+     {
+      "item": "beef-pork mince blend (40/60), raw",
+      "flag": "FREEZE ON ARRIVAL",
+      "quantity": "use about 300 g; buy 300-400 g pack",
+      "usedIn": "Moroccan Spiced Beef-Pork Mince with Couscous",
+      "storage": "Freeze on arrival. Thaw in the refrigerator the night before cooking."
      }
     ]
    },
@@ -3612,7 +3642,7 @@ var GROCERY = {
      {
       "item": "0% Greek-style yogurt",
       "flag": "",
-      "quantity": "use about 350 g; buy 500 g tub",
+      "quantity": "use about 450 g; buy 500 g tub",
       "usedIn": "Berry overnight oats, Chicken fajita rice bowl, French toast bowl",
       "storage": "Mostly/fully consumed"
      },
@@ -3624,11 +3654,11 @@ var GROCERY = {
       "storage": "Some remainder likely"
      },
      {
-      "item": "burger cheese slice",
+      "item": "mozzarella",
       "flag": "",
-      "quantity": "use about 40 g; buy small 8-slice pack",
-      "usedIn": "Homemade burger and wedges",
-      "storage": "Some remainder likely"
+      "quantity": "use about 60 g; buy 125 g ball (backup pizza only — skip if eating out)",
+      "usedIn": "Weekend Flex Meal (pizza backup)",
+      "storage": "Refrigerate."
      }
     ]
    },
@@ -3648,13 +3678,6 @@ var GROCERY = {
       "quantity": "use about 405 g; buy 600-800 g sliced loaf",
       "usedIn": "Apple peanut butter toast, Banana toast honey preworkout, French toast bowl, Turkey meatballs tomato pasta",
       "storage": "Freeze roughly half the sliced loaf on arrival and remove individual slices as needed. This is for freshness and waste reduction, not because bread is unsafe in the cupboard. Mostly/fully consumed."
-     },
-     {
-      "item": "wholegrain burger bun",
-      "flag": "FREEZE UNUSED BUNS",
-      "quantity": "use about 180 g; buy 2-4 pack",
-      "usedIn": "Homemade burger and wedges",
-      "storage": "Freeze any buns not needed within 2-3 days, especially when buying a 4-pack. Thaw sealed at room temperature or warm briefly in the air fryer. Some remainder likely."
      },
      {
       "item": "dry rice",
@@ -3680,9 +3703,23 @@ var GROCERY = {
      {
       "item": "potatoes",
       "flag": "",
-      "quantity": "use about 1.3 kg; buy 2-2.5 kg bag",
-      "usedIn": "Chicken potato vegetable traybake, Homemade burger and wedges",
+      "quantity": "use about 700 g; buy 1-1.5 kg bag",
+      "usedIn": "Chicken potato vegetable traybake",
       "storage": "Mostly/fully consumed"
+     },
+     {
+      "item": "pizza base",
+      "flag": "",
+      "quantity": "use 1 x 200 g base (backup pizza only — skip if eating out)",
+      "usedIn": "Weekend Flex Meal (pizza backup)",
+      "storage": "Keep dry and sealed, or refrigerate/freeze depending on the product."
+     },
+     {
+      "item": "dry couscous",
+      "flag": "",
+      "quantity": "use about 260 g; buy 500 g box",
+      "usedIn": "Moroccan Spiced Beef-Pork Mince with Couscous",
+      "storage": "Pantry remainder expected"
      }
     ]
    },
@@ -3692,7 +3729,7 @@ var GROCERY = {
      {
       "item": "canned lentils, drained",
       "flag": "",
-      "quantity": "use about 360 g; buy 400 g cans, about 240 g drained",
+      "quantity": "use about 360 g; buy 2 x 400 g cans, about 240 g drained each",
       "usedIn": "Turkey lentil bolognese",
       "storage": "Mostly/fully consumed"
      },
@@ -3713,14 +3750,14 @@ var GROCERY = {
      {
       "item": "canned chopped tomatoes",
       "flag": "",
-      "quantity": "use about 400 g; buy 400 g can",
+      "quantity": "use about 500 g; buy 2 x 400 g cans",
       "usedIn": "Beef bean chili with rice",
       "storage": "Mostly/fully consumed"
      },
      {
       "item": "passata",
       "flag": "",
-      "quantity": "use about 1.00 L; buy 500-700 ml carton",
+      "quantity": "use about 1.00 L; buy 2-3 x 500-700 ml cartons",
       "usedIn": "Turkey lentil bolognese, Turkey meatballs tomato pasta",
       "storage": "Mostly/fully consumed"
      },
@@ -3765,7 +3802,7 @@ var GROCERY = {
      {
       "item": "onion",
       "flag": "",
-      "quantity": "use about 550 g; buy 1 kg net",
+      "quantity": "use about 630 g; buy 1 kg net",
       "usedIn": "Beef bean chili with rice, Chicken fajita rice bowl, Lemon Parmesan chicken orzo, Turkey lentil bolognese; plus other snacks/meals",
       "storage": "Mostly/fully consumed"
      },
@@ -3786,7 +3823,7 @@ var GROCERY = {
      {
       "item": "courgette",
       "flag": "",
-      "quantity": "use about 225 g; buy 2 medium",
+      "quantity": "use about 375 g; buy 2 medium",
       "usedIn": "Turkey lentil bolognese",
       "storage": "Mostly/fully consumed"
      },
@@ -3800,8 +3837,8 @@ var GROCERY = {
      {
       "item": "mixed salad leaves",
       "flag": "",
-      "quantity": "use about 300 g; buy 150-300 g bag",
-      "usedIn": "Homemade burger and wedges",
+      "quantity": "use about 150 g; buy 150 g bag",
+      "usedIn": "Weekend Flex Meal (pizza backup)",
       "storage": "Mostly/fully consumed"
      },
      {
@@ -3873,8 +3910,8 @@ var GROCERY = {
      {
       "item": "rapeseed oil",
       "flag": "",
-      "quantity": "use about 96 g; buy 500 ml bottle",
-      "usedIn": "Beef bean chili with rice, Chicken fajita rice bowl, Chicken potato vegetable traybake, Homemade burger and wedges; plus other snacks/meals",
+      "quantity": "use about 81 g; buy 500 ml bottle",
+      "usedIn": "Beef bean chili with rice, Chicken fajita rice bowl, Chicken potato vegetable traybake; plus other snacks/meals",
       "storage": "Pantry remainder expected"
      }
     ]
@@ -3902,20 +3939,6 @@ var GROCERY = {
       "quantity": "use about 60 g; buy 200 g tub",
       "usedIn": "Carrots cucumber hummus",
       "storage": "Some remainder likely"
-     },
-     {
-      "item": "ketchup",
-      "flag": "",
-      "quantity": "use about 30 g; buy small bottle",
-      "usedIn": "Homemade burger and wedges",
-      "storage": "Pantry remainder expected"
-     },
-     {
-      "item": "mustard",
-      "flag": "",
-      "quantity": "use about 20 g; buy small jar",
-      "usedIn": "Homemade burger and wedges",
-      "storage": "Pantry remainder expected"
      },
      {
       "item": "Core spice set",
@@ -3993,7 +4016,8 @@ var GROCERY = {
       "flag": "",
       "quantity": "use about 5 eggs; buy box of 6 or 10",
       "usedIn": "Avocado egg toast, Beef meatballs tomato pasta, French toast bowl",
-      "storage": "Mostly/fully consumed"
+      "storage": "Mostly/fully consumed",
+      "carryover": "If no surprises this week: covered if you bought the 10-egg box in Week 1 (~6 left); if you bought the 6-box (~2 left), you'll need a few more."
      },
      {
       "item": "semi-skimmed milk",
@@ -4007,7 +4031,8 @@ var GROCERY = {
       "flag": "",
       "quantity": "use about 300 g; buy 500 g tub",
       "usedIn": "Avocado egg toast, Popcorn and plain skyr",
-      "storage": "Mostly/fully consumed"
+      "storage": "Mostly/fully consumed",
+      "carryover": "If no surprises this week: Week 1's 500g tub should have ~300g left, exactly matching the 300g needed here — skip buying more unless you're running low."
      },
      {
       "item": "Danone peach-apricot skyr",
@@ -4047,7 +4072,8 @@ var GROCERY = {
       "flag": "",
       "quantity": "use about 445 g; buy 1 kg bag",
       "usedIn": "Apple-walnut protein porridge, Berry overnight oats, Chocolate-banana porridge, Peach-apricot overnight oats",
-      "storage": "Mostly/fully consumed"
+      "storage": "Mostly/fully consumed",
+      "carryover": "If no surprises this week: Week 1's 1kg bag should have ~470g left, more than the 445g needed here — skip buying more unless you're running low."
      },
      {
       "item": "wholegrain bread FREEZE HALF ON ARRIVAL (recommended)",
@@ -4372,19 +4398,48 @@ var GROCERY = {
  }
 };
 
-RECIPES["Restaurant pizza meal (estimate)"] = {
-  servingInfo: "Planned 20% / flex meal — one evening",
-  nutrition: { kcal: 950, protein: 55, carbs: 125, fat: 25, fibre: null },
+RECIPES["Moroccan Spiced Beef-Pork Mince with Couscous"] = {
+  servingInfo: "Makes 2 portions | Prep 12 min | Cook 20 min",
+  nutrition: { kcal: 825, protein: 53, carbs: 102, fat: 20, fibre: 6 },
   ingredients: [
-    "Restaurant order: one individual thin-crust pizza (~30cm), tomato base, mozzarella, chicken or lean ham, plus vegetables. Request no shellfish/seafood and no mushrooms; skip stuffed crust and cream sauce.",
-    "Home fallback: 200g pizza base; 100ml passata; 120g cooked chicken; 60g mozzarella; 100g pepper/spinach; 150g side salad."
+    "300 g beef-pork mince blend (40/60), raw",
+    "260 g dry couscous",
+    "100 g canned chopped tomatoes",
+    "150 g courgette",
+    "80 g onion",
+    "100 g 0% Greek-style yogurt",
+    "10 g (about 10 ml) rapeseed oil",
+    "Spices: 2 tsp cumin, 2 tsp paprika, 1 tsp cinnamon, salt and pepper (from the core spice set)"
   ],
   method: [
-    "Restaurant estimate: 800–1,100 kcal, 30–45g protein, 100–140g carbohydrate, 25–45g fat.",
-    "Home fallback estimate: 950 kcal, 55g protein, 125g carbohydrate, 25g fat."
+    "Heat the oil in a pan over medium heat. Add the onion and cook 3-4 min until soft.",
+    "Add the mince and brown thoroughly, breaking it up with a spoon, about 6-8 min.",
+    "Stir in the cumin, paprika, and cinnamon; cook 1 min until fragrant.",
+    "Add the chopped tomatoes and courgette. Simmer 10-12 min until the courgette is tender and the sauce has thickened slightly. Season with salt and pepper.",
+    "Meanwhile, prepare the couscous per packet instructions (usually: pour boiling water or stock over, cover, rest 5 min, then fluff with a fork).",
+    "Serve the mince mixture over the couscous, topped with a dollop of Greek yogurt."
   ],
   meta: {
-    "Treat this as": "The planned 20% meal — not an all-day \u201ccheat day.\u201d Eat normally before it, enjoy it, and resume the plan at the next meal.",
+    "Freezer suitability": "Freezes well as a flat pack; the couscous is best cooked fresh at reheating rather than frozen with the sauce, but combined portions still reheat acceptably.",
+    "Beginner tip / substitution": "Bell pepper works in place of courgette. If you want a sweet-savoury note back, a small handful of raisins or chopped dates added with the tomatoes works well — entirely optional. Ground ginger adds extra warmth if you have it."
+  },
+  seasoningGuide: null
+};
+
+RECIPES["Weekend Flex Meal"] = {
+  servingInfo: "Your planned 20% / flex meal — one evening, pick ONE of the two",
+  nutrition: { kcal: 950, protein: 35, carbs: 120, fat: 35, fibre: null },
+  ingredients: [
+    "Option A — Homemade Pizza (backup): 200g pizza base; 100ml passata; 120g cooked chicken; 60g mozzarella; 100g pepper/spinach; 150g side salad. (~950 kcal, 55g protein, 125g carbs, 25g fat)",
+    "Option B — Restaurant (pizza, burger, or your choice): order what you actually want \u2014 a pizza place, a burger, or anywhere else. Keep it to one individual-size main plus a drink, no side-to-side sharing platters. (~800\u20131,100 kcal, 30\u201345g protein, 100\u2013140g carbs, 25\u201345g fat \u2014 varies by restaurant and order)"
+  ],
+  method: [
+    "Pick whichever of the two you're actually doing this week \u2014 you don't need both, just one.",
+    "Pizza backup: spread passata on the base, add chicken, mozzarella and vegetables, bake per the base's instructions, serve with the side salad.",
+    "Restaurant: order as you like, and treat it as the full flex meal \u2014 no need to \"save up\" by skipping earlier meals."
+  ],
+  meta: {
+    "Treat this as": "The planned 20% meal \u2014 not an all-day \u201ccheat day.\u201d Eat normally before it, enjoy it, and resume the plan at the next meal.",
     "If it runs larger than expected": "Remove only the optional evening snack. Don't skip the next day's breakfast or add extra exercise to compensate."
   },
   seasoningGuide: null
@@ -4564,11 +4619,90 @@ var SNACK_CATEGORIES = [
   { label: "Other Snacks", sub: "Not tied to a specific day in the plan",
     snacks: ["Chocolate berry skyr", "Milk oats honey", "Vanilla whey milk shaker"] }
 ];
+
+// WEEK_MENU: the reorderable dinner/lunch system. "pool" lists every batch-cooked
+// dish for that week with its portion budget, original cook day (fixed — tied to
+// the shopping/prep rhythm, not user-adjustable), and portability (can it be
+// packed as a next-day office lunch?). "fixedSlots" are the two boundary slots
+// each week depends on from outside its own 7 days (Day 1's lunch comes from the
+// pre-week setup cook; the last day's dinner feeds next week's Day+1 lunch) —
+// these stay locked since reordering them would ripple outside this week entirely.
+// "defaultSlots" is the original plan's exact assignment, used until the person
+// customizes something.
+var WEEK_MENU = {
+  1: {
+    days: [1,2,3,4,5,6,7],
+    fixedSlots: { "1-lunch": "Chicken potato vegetable traybake", "7-dinner": "Turkey meatballs tomato pasta" },
+    pool: [
+      { name: "Turkey lentil bolognese", cookDay: 1, portions: 3, portable: true },
+      { name: "Moroccan Spiced Beef-Pork Mince with Couscous", cookDay: 1, portions: 2, portable: true },
+      { name: "Chicken fajita rice bowl", cookDay: 2, portions: 2, portable: true },
+      { name: "Beef bean chili with rice", cookDay: 3, portions: 2, portable: true },
+      { name: "Lemon Parmesan chicken orzo", cookDay: 4, portions: 2, portable: true },
+      { name: "Weekend Flex Meal", cookDay: 6, portions: 1, portable: false }
+    ],
+    defaultSlots: {
+      "1-dinner": "Moroccan Spiced Beef-Pork Mince with Couscous",
+      "2-lunch": "Moroccan Spiced Beef-Pork Mince with Couscous",
+      "2-dinner": "Chicken fajita rice bowl",
+      "3-lunch": "Chicken fajita rice bowl",
+      "3-dinner": "Beef bean chili with rice",
+      "4-lunch": "Beef bean chili with rice",
+      "4-dinner": "Lemon Parmesan chicken orzo",
+      "5-lunch": "Lemon Parmesan chicken orzo",
+      "5-dinner": "Turkey lentil bolognese",
+      "6-lunch": "Turkey lentil bolognese",
+      "6-dinner": "Weekend Flex Meal",
+      "7-lunch": "Turkey lentil bolognese"
+    }
+  },
+  2: {
+    days: [8,9,10,11,12,13,14],
+    fixedSlots: { "8-lunch": "Turkey meatballs tomato pasta" },
+    pool: [
+      { name: "Chicken peanut noodles", cookDay: 8, portions: 2, portable: true },
+      { name: "Chicken chickpea curry and rice", cookDay: 9, portions: 2, portable: true },
+      { name: "Turkey burrito bowl", cookDay: 10, portions: 2, portable: true },
+      { name: "Beef meatballs tomato pasta", cookDay: 11, portions: 2, portable: true },
+      { name: "Chicken mozzarella pizza wraps", cookDay: 12, portions: 2, portable: true },
+      { name: "Roast chicken thigh tray", cookDay: 13, portions: 2, portable: true },
+      { name: "Turkey lentil shepherd pie", cookDay: 14, portions: 1, portable: true }
+    ],
+    defaultSlots: {
+      "8-dinner": "Chicken peanut noodles",
+      "9-lunch": "Chicken peanut noodles",
+      "9-dinner": "Chicken chickpea curry and rice",
+      "10-lunch": "Chicken chickpea curry and rice",
+      "10-dinner": "Turkey burrito bowl",
+      "11-lunch": "Turkey burrito bowl",
+      "11-dinner": "Beef meatballs tomato pasta",
+      "12-lunch": "Beef meatballs tomato pasta",
+      "12-dinner": "Chicken mozzarella pizza wraps",
+      "13-lunch": "Chicken mozzarella pizza wraps",
+      "13-dinner": "Roast chicken thigh tray",
+      "14-lunch": "Roast chicken thigh tray",
+      "14-dinner": "Turkey lentil shepherd pie"
+    }
+  }
+};
+
+RECIPES["Emergency Store-Bought Lunch"] = {
+  servingInfo: "Not from the shopping list — a same-day backup when there's no leftover to pack",
+  nutrition: { kcal: 650, protein: 35, carbs: 70, fat: 22, fibre: null },
+  ingredients: ["Whatever's realistic and quick that day \u2014 a supermarket meal deal, a sandwich shop, a work canteen, etc."],
+  method: [
+    "Aim roughly for the numbers above (~650 kcal, ~35g protein) if you're choosing between options, but don't stress the precision \u2014 it's one meal.",
+    "If it runs higher in kcal/fat than planned, no action needed elsewhere \u2014 this is a normal part of flexible living, not a slip to correct for."
+  ],
+  meta: {},
+  seasoningGuide: null
+};
 </script>
 <script>
 (function(){
   var tabs = document.querySelectorAll('.tab');
   var panels = document.querySelectorAll('.panel');
+
   function activate(key){
     tabs.forEach(function(t){
       var isActive = t.getAttribute('data-tab') === key;
@@ -4999,6 +5133,120 @@ var WORKOUT_DATA = {
 
   window.__renderTrainingStatus = renderTrainingStatus;
   renderTrainingStatus();
+})();
+
+(function(){
+  var CUSTOM_KEY = "mealplan:customSlots";
+
+  function weekOf(day){ return day <= 7 ? 1 : 2; }
+
+  function loadCustom(){
+    try{ return JSON.parse(localStorage.getItem(CUSTOM_KEY) || "{}"); }catch(e){ return {}; }
+  }
+  function saveCustom(obj){
+    try{ localStorage.setItem(CUSTOM_KEY, JSON.stringify(obj)); }catch(e){}
+  }
+
+  // Returns the recipe name currently assigned to a given day + "lunch"/"dinner".
+  function getSlot(day, mealType){
+    var week = weekOf(day);
+    var wd = WEEK_MENU[week];
+    var key = day + "-" + mealType;
+    if (wd.fixedSlots[key]) return wd.fixedSlots[key];
+    var custom = loadCustom();
+    if (custom[key]) return custom[key];
+    return wd.defaultSlots[key] || null;
+  }
+
+  // Assigns a new dinner for `day`. If the recipe is portable, also cascades to
+  // set the following day's lunch to match (unless that slot is a fixed boundary
+  // slot, which never gets overwritten by cascading).
+  function setDinner(day, recipeName){
+    var week = weekOf(day);
+    var wd = WEEK_MENU[week];
+    var custom = loadCustom();
+    custom[day + "-dinner"] = recipeName;
+
+    var recipe = wd.pool.find(function(r){ return r.name === recipeName; });
+    var tomorrow = day + 1;
+    if (recipe && recipe.portable && tomorrow <= 14){
+      var tWeek = weekOf(tomorrow);
+      var tKey = tomorrow + "-lunch";
+      if (!WEEK_MENU[tWeek].fixedSlots[tKey]){
+        custom[tKey] = recipeName;
+      }
+    }
+    saveCustom(custom);
+  }
+
+  // Manually sets a lunch slot directly (used for picking an older leftover,
+  // or the Emergency Lunch option), independent of the dinner-cascade above.
+  function setLunch(day, recipeName){
+    var week = weekOf(day);
+    var key = day + "-lunch";
+    if (WEEK_MENU[week].fixedSlots[key]) return; // fixed slots aren't editable
+    var custom = loadCustom();
+    custom[key] = recipeName;
+    saveCustom(custom);
+  }
+
+  function resetDay(day){
+    var custom = loadCustom();
+    delete custom[day + "-dinner"];
+    delete custom[day + "-lunch"];
+    saveCustom(custom);
+  }
+
+  function getPortionsUsed(week, recipeName){
+    var wd = WEEK_MENU[week];
+    var count = 0;
+    wd.days.forEach(function(day){
+      ["lunch", "dinner"].forEach(function(mt){
+        if (getSlot(day, mt) === recipeName) count++;
+      });
+    });
+    return count;
+  }
+
+  function getPortionsRemaining(week, recipeName){
+    var recipe = WEEK_MENU[week].pool.find(function(r){ return r.name === recipeName; });
+    if (!recipe) return 0;
+    return recipe.portions - getPortionsUsed(week, recipeName);
+  }
+
+  // For `day`, returns any "thaw/prep X tonight for tomorrow's Y" reminders
+  // needed given the CURRENT (possibly customized) assignment for day+1 — i.e.
+  // this recomputes the freeze/thaw chain dynamically instead of reading fixed
+  // text, so reordering automatically keeps prep reminders correct.
+  function getPrepRemindersForDay(day){
+    var reminders = [];
+    var tomorrow = day + 1;
+    if (tomorrow > 14) return reminders;
+    var tWeek = weekOf(tomorrow);
+    var wd = WEEK_MENU[tWeek];
+    ["dinner", "lunch"].forEach(function(mt){
+      var key = tomorrow + "-" + mt;
+      if (wd.fixedSlots[key]) return; // fixed slots keep their original Part K text
+      var recipeName = getSlot(tomorrow, mt);
+      if (!recipeName || recipeName === "Emergency Store-Bought Lunch") return;
+      var recipe = wd.pool.find(function(r){ return r.name === recipeName; });
+      if (recipe && recipe.cookDay <= tomorrow - 2){
+        reminders.push({ recipeName: recipeName, mealType: mt, forDay: tomorrow });
+      }
+    });
+    return reminders;
+  }
+
+  window.__mealMenu = {
+    getSlot: getSlot,
+    setDinner: setDinner,
+    setLunch: setLunch,
+    resetDay: resetDay,
+    getPortionsUsed: getPortionsUsed,
+    getPortionsRemaining: getPortionsRemaining,
+    getPrepRemindersForDay: getPrepRemindersForDay,
+    weekOf: weekOf
+  };
 })();
 
 (function(){
@@ -5836,6 +6084,40 @@ var WORKOUT_DATA = {
     return reminders;
   }
 
+  function buildPrepReminderCard(reminder){
+    var todayStr = new Date().toISOString().slice(0, 10);
+    var checkKey = "prep:check:" + todayStr + ":" + reminder.recipeName + ":" + reminder.mealType;
+    var card = document.createElement("div");
+    card.className = "action-check-card";
+    var checked = false;
+    try{ checked = localStorage.getItem(checkKey) === "1"; }catch(e){}
+    if (checked) card.classList.add("is-checked");
+
+    var id = "chk-prep-" + reminder.mealType + "-" + reminder.forDay;
+    var input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = checked;
+    input.id = id;
+
+    var label = document.createElement("label");
+    label.setAttribute("for", id);
+    var titleSpan = document.createElement("span");
+    titleSpan.className = "action-check-title";
+    titleSpan.textContent = "Prep For Tomorrow";
+    label.appendChild(titleSpan);
+    var verb = reminder.mealType === "dinner" ? "tomorrow's dinner" : "tomorrow's lunch";
+    label.appendChild(document.createTextNode("Thaw " + reminder.recipeName + " tonight \u2014 it's " + verb + "."));
+
+    input.addEventListener("change", function(){
+      try{ localStorage.setItem(checkKey, input.checked ? "1" : "0"); }catch(e){}
+      card.classList.toggle("is-checked", input.checked);
+    });
+
+    card.appendChild(input);
+    card.appendChild(label);
+    return card;
+  }
+
   function buildBinReminderCard(reminder){
     var todayStr = new Date().toISOString().slice(0, 10);
     var checkKey = "bins:check:" + todayStr + ":" + reminder.type;
@@ -5869,6 +6151,30 @@ var WORKOUT_DATA = {
     return card;
   }
 
+  function getEffectiveMeals(dayKey){
+    var day = MEALPLAN_DAYS[dayKey];
+    var dayNum = parseInt(dayKey, 10);
+    if (!window.__mealMenu) return day.meals;
+    return day.meals.map(function(m){
+      var mealType = null;
+      if (m.timing.indexOf("Lunch") > -1) mealType = "lunch";
+      else if (m.timing.indexOf("Dinner") > -1) mealType = "dinner";
+      if (!mealType) return m;
+
+      var currentRecipeName = window.__mealMenu.getSlot(dayNum, mealType);
+      if (!currentRecipeName || currentRecipeName === m.name) return m;
+
+      var r = RECIPES[currentRecipeName];
+      if (!r) return m;
+      return {
+        timing: m.timing,
+        name: currentRecipeName,
+        ingredients: (r.ingredients || []).join("; "),
+        kcal: r.nutrition.kcal, protein: r.nutrition.protein, carbs: r.nutrition.carbs, fat: r.nutrition.fat
+      };
+    });
+  }
+
   function renderTodayView(){
     var todayDay = refreshAnchorDisplay();
     var key = String(todayDay);
@@ -5881,30 +6187,41 @@ var WORKOUT_DATA = {
     if (headingEl) headingEl.textContent = day.weekday;
     if (subheadEl) subheadEl.textContent = day.location + " \u00b7 " + day.suggestedLoad;
 
+    var effectiveMeals = getEffectiveMeals(key);
+    var recomputedTotals = effectiveMeals.reduce(function(acc, m){
+      acc.kcal += m.kcal; acc.protein += m.protein; acc.carbs += m.carbs; acc.fat += m.fat;
+      return acc;
+    }, { kcal: 0, protein: 0, carbs: 0, fat: 0 });
+
     var tagsEl = document.getElementById("today-info-tags");
     tagsEl.innerHTML = "";
-    var t = day.totals;
-    tagsEl.appendChild(tagEl(t.kcal + " kcal", "tag-primary"));
-    tagsEl.appendChild(tagEl("P " + t.protein + "g", "tag-cyan"));
-    tagsEl.appendChild(tagEl("C " + t.carbs + "g", "tag-cyan"));
-    tagsEl.appendChild(tagEl("F " + t.fat + "g", "tag-cyan"));
-    tagsEl.appendChild(tagEl("Fibre " + t.fibre + "g", "tag-cyan"));
+    tagsEl.appendChild(tagEl(recomputedTotals.kcal + " kcal", "tag-primary"));
+    tagsEl.appendChild(tagEl("P " + recomputedTotals.protein + "g", "tag-cyan"));
+    tagsEl.appendChild(tagEl("C " + recomputedTotals.carbs + "g", "tag-cyan"));
+    tagsEl.appendChild(tagEl("F " + recomputedTotals.fat + "g", "tag-cyan"));
+    tagsEl.appendChild(tagEl("Fibre " + day.totals.fibre + "g (unadjusted)", "tag-cyan"));
 
     renderWorkoutPicker();
 
     var mealListEl = document.getElementById("today-meal-list");
     mealListEl.innerHTML = "";
-    day.meals.forEach(function(m){ mealListEl.appendChild(buildMealCard(m)); });
+    effectiveMeals.forEach(function(m){ mealListEl.appendChild(buildMealCard(m)); });
 
     var actionsWrapEl = document.getElementById("today-actions-wrap");
     actionsWrapEl.innerHTML = "";
     getBinRemindersForTomorrow().forEach(function(reminder){
       actionsWrapEl.appendChild(buildBinReminderCard(reminder));
     });
+    if (window.__mealMenu){
+      window.__mealMenu.getPrepRemindersForDay(parseInt(key, 10)).forEach(function(pr){
+        actionsWrapEl.appendChild(buildPrepReminderCard(pr));
+      });
+    }
     actionsWrapEl.appendChild(buildActionCheckCard(key, "actionsToday", "Actions Due Today", actions.actionsToday));
     actionsWrapEl.appendChild(buildActionCheckCard(key, "readyTomorrow", "Ready For Tomorrow", actions.readyTomorrow));
   }
   window.__renderTodayView = renderTodayView;
+  window.__getEffectiveMeals = getEffectiveMeals;
   window.__getBinRemindersForTomorrow = getBinRemindersForTomorrow;
 
   var todayAnchorEditBtn = document.getElementById("today-anchor-edit-btn");
@@ -6181,6 +6498,12 @@ var WORKOUT_DATA = {
         body.appendChild(nameLine);
         body.appendChild(qtyLine);
         if (item.storage) body.appendChild(detailLine);
+        if (item.carryover){
+          var carryLine = document.createElement("p");
+          carryLine.className = "grocery-item-carryover";
+          carryLine.textContent = "\u21bb " + item.carryover;
+          body.appendChild(carryLine);
+        }
 
         cb.addEventListener("change", function(){
           try{ localStorage.setItem(key, cb.checked ? "1" : "0"); }catch(e){}
@@ -6337,8 +6660,9 @@ var WORKOUT_DATA = {
     var day = MEALPLAN_DAYS[String(dayNum)];
     var actions = MEALPLAN_ACTIONS[String(dayNum)];
     var isOfficeDay = !!(day && day.location === "Office");
+    var effectiveMeals = (window.__getEffectiveMeals && day) ? window.__getEffectiveMeals(String(dayNum)) : (day ? day.meals : []);
     if (settings.meals && day){
-      day.meals.forEach(function(m){
+      effectiveMeals.forEach(function(m){
         var slot = mealTimeSlot(m.timing, isOfficeDay);
         if (slot){
           items.push({ time: slot, key: "meal:" + dayNum + ":" + m.name, title: (m.timing.split("(")[0] || "Meal time").trim(), body: m.name });
@@ -6350,6 +6674,12 @@ var WORKOUT_DATA = {
     }
     if (settings.tomorrow && actions && actions.readyTomorrow){
       items.push({ time: "21:00", key: "tomorrow:" + dayNum, title: "Tonight, for tomorrow", body: actions.readyTomorrow });
+    }
+    if (settings.tomorrow && window.__mealMenu){
+      window.__mealMenu.getPrepRemindersForDay(dayNum).forEach(function(pr){
+        var verb = pr.mealType === "dinner" ? "tomorrow's dinner" : "tomorrow's lunch";
+        items.push({ time: "21:00", key: "prep:" + dayNum + ":" + pr.recipeName + ":" + pr.mealType, title: "Tonight, for tomorrow", body: "Thaw " + pr.recipeName + " \u2014 it's " + verb + "." });
+      });
     }
     if (settings.bins && window.__getBinRemindersForTomorrow){
       window.__getBinRemindersForTomorrow().forEach(function(reminder){
@@ -6731,6 +7061,128 @@ var WORKOUT_DATA = {
   }
 
   renderSnacksTab("all");
+})();
+
+(function(){
+  var container = document.getElementById("menu-planner-days");
+  if (!container) return;
+  var weekToggleWrap = document.getElementById("menu-week-toggle");
+  var resetBtn = document.getElementById("menu-reset-btn");
+  var currentMenuWeek = 1;
+
+  var DAY_WEEKDAY_NAMES = {
+    1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 7: "Sunday",
+    8: "Monday", 9: "Tuesday", 10: "Wednesday", 11: "Thursday", 12: "Friday", 13: "Saturday", 14: "Sunday"
+  };
+
+  function buildRecipeOptions(week, currentDay, mealType, selectedRecipe){
+    var wd = WEEK_MENU[week];
+    var options = [];
+    wd.pool.forEach(function(r){
+      if (r.cookDay > currentDay) return; // can't eat something before it's cooked
+      var remaining = window.__mealMenu.getPortionsRemaining(week, r.name);
+      var displayRemaining = (r.name === selectedRecipe) ? remaining + 1 : remaining;
+      options.push({ value: r.name, label: r.name + " (" + displayRemaining + " left)" });
+    });
+    if (mealType === "lunch"){
+      options.push({ value: "Emergency Store-Bought Lunch", label: "Emergency Store-Bought Lunch (no leftover needed)" });
+    }
+    return options;
+  }
+
+  function renderDay(day){
+    var week = window.__mealMenu.weekOf(day);
+    var wd = WEEK_MENU[week];
+    var card = document.createElement("div");
+    card.className = "menu-day-card";
+    var label = document.createElement("p");
+    label.className = "menu-day-label";
+    label.textContent = "Day " + day + " \u00b7 " + DAY_WEEKDAY_NAMES[day];
+    card.appendChild(label);
+
+    ["dinner", "lunch"].forEach(function(mealType){
+      var slotKey = day + "-" + mealType;
+      var current = window.__mealMenu.getSlot(day, mealType);
+      var slotDiv = document.createElement("div");
+      slotDiv.className = "menu-slot";
+      var slotLabel = document.createElement("span");
+      slotLabel.className = "menu-slot-label";
+      slotLabel.textContent = mealType === "dinner" ? "Dinner" : "Lunch";
+      slotDiv.appendChild(slotLabel);
+
+      if (wd.fixedSlots[slotKey]){
+        var fixedSpan = document.createElement("span");
+        fixedSpan.className = "menu-slot-fixed";
+        fixedSpan.textContent = current + " \u2014 fixed (shared with the adjoining week)";
+        slotDiv.appendChild(fixedSpan);
+      } else {
+        var select = document.createElement("select");
+        select.className = "menu-slot-select";
+        buildRecipeOptions(week, day, mealType, current).forEach(function(opt){
+          var optionEl = document.createElement("option");
+          optionEl.value = opt.value;
+          optionEl.textContent = opt.label;
+          if (opt.value === current) optionEl.selected = true;
+          select.appendChild(optionEl);
+        });
+        select.addEventListener("change", function(){
+          if (mealType === "dinner") window.__mealMenu.setDinner(day, select.value);
+          else window.__mealMenu.setLunch(day, select.value);
+          renderWeek(currentMenuWeek);
+          if (window.__renderTodayView) window.__renderTodayView();
+        });
+        slotDiv.appendChild(select);
+
+        if (current !== "Emergency Store-Bought Lunch"){
+          var remaining = window.__mealMenu.getPortionsRemaining(week, current);
+          if (remaining < 0){
+            var warn = document.createElement("p");
+            warn.className = "menu-slot-warn";
+            warn.textContent = "\u26a0 " + current + " is now assigned " + Math.abs(remaining) + " time" + (Math.abs(remaining) === 1 ? "" : "s") + " more than this week's portions cover.";
+            slotDiv.appendChild(warn);
+          }
+        }
+      }
+      card.appendChild(slotDiv);
+    });
+
+    return card;
+  }
+
+  function renderWeek(week){
+    currentMenuWeek = week;
+    container.innerHTML = "";
+    WEEK_MENU[week].days.forEach(function(day){
+      container.appendChild(renderDay(day));
+    });
+  }
+
+  if (weekToggleWrap){
+    weekToggleWrap.querySelectorAll(".wp-option-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        weekToggleWrap.querySelectorAll(".wp-option-btn").forEach(function(b){ b.classList.toggle("active", b === btn); });
+        renderWeek(parseInt(btn.getAttribute("data-menuweek"), 10));
+      });
+    });
+  }
+
+  if (resetBtn){
+    resetBtn.addEventListener("click", function(){
+      if (!confirm("Reset Week " + currentMenuWeek + " to the original plan? This clears all your changes for this week.")) return;
+      var custom = {};
+      try{ custom = JSON.parse(localStorage.getItem("mealplan:customSlots") || "{}"); }catch(e){}
+      WEEK_MENU[currentMenuWeek].days.forEach(function(day){
+        delete custom[day + "-dinner"];
+        delete custom[day + "-lunch"];
+      });
+      try{ localStorage.setItem("mealplan:customSlots", JSON.stringify(custom)); }catch(e){}
+      renderWeek(currentMenuWeek);
+      if (window.__renderTodayView) window.__renderTodayView();
+    });
+  }
+
+  window.__renderMenuPlanner = renderWeek;
+  renderWeek(1);
 })();
 </script>
 </body>
