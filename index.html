@@ -402,6 +402,8 @@
   .mp-day-select-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:8px;margin-bottom:20px;}
 
   .mp-day-header{margin-bottom:16px;}
+  .mp-allday-block{padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+  .mp-allday-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
   .mp-day-header h3{font-family:var(--font-display);font-weight:600;font-size:1.25rem;margin:0 0 4px;color:var(--ink);}
   .mp-day-header .panel-sub{margin-bottom:10px;}
   .mp-info-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px;}
@@ -1358,6 +1360,7 @@
         <div class="week-toggle" id="mp-week-toggle">
           <button type="button" class="week-toggle-btn active" data-mpweek="1">Week 1</button>
           <button type="button" class="week-toggle-btn" data-mpweek="2">Week 2</button>
+          <button type="button" class="week-toggle-btn" data-mpweek="all">All 14 days</button>
         </div>
 
         <div class="week-grid" id="mp-day-select"></div>
@@ -6263,6 +6266,57 @@ var WORKOUT_DATA = {
     });
   }
 
+  function buildDayBlock(key){
+    var day = MEALPLAN_DAYS[key];
+    if (!day) return null;
+    var wrap = document.createElement("div");
+
+    var header = document.createElement("div");
+    header.className = "mp-day-header";
+    var h3 = document.createElement("h3");
+    h3.textContent = "Day " + key + " \u2014 " + day.weekday;
+    var sub = document.createElement("p");
+    sub.className = "panel-sub";
+    sub.textContent = day.location + " \u00b7 " + day.suggestedLoad;
+    header.appendChild(h3);
+    header.appendChild(sub);
+    wrap.appendChild(header);
+
+    var meals = window.__getEffectiveMeals ? window.__getEffectiveMeals(key) : day.meals;
+    var t = meals.reduce(function(acc, m){
+      acc.kcal += m.kcal; acc.protein += m.protein; acc.carbs += m.carbs; acc.fat += m.fat;
+      return acc;
+    }, { kcal: 0, protein: 0, carbs: 0, fat: 0 });
+
+    var tagsRow = document.createElement("div");
+    tagsRow.className = "mp-info-tags";
+    tagsRow.appendChild(tagEl(t.kcal + " kcal", "tag-primary"));
+    tagsRow.appendChild(tagEl("P " + t.protein + "g", "tag-cyan"));
+    tagsRow.appendChild(tagEl("C " + t.carbs + "g", "tag-cyan"));
+    tagsRow.appendChild(tagEl("F " + t.fat + "g", "tag-cyan"));
+    tagsRow.appendChild(tagEl("Fibre " + day.totals.fibre + "g", "tag-cyan"));
+    wrap.appendChild(tagsRow);
+
+    var mealList = document.createElement("div");
+    mealList.className = "mp-meal-list";
+    meals.forEach(function(m){ mealList.appendChild(buildMealCard(m)); });
+    wrap.appendChild(mealList);
+    return wrap;
+  }
+
+  function renderAllDays(){
+    var container = document.getElementById("mp-day-view");
+    if (!container) return;
+    container.innerHTML = "";
+    for (var d = 1; d <= 14; d++){
+      var block = buildDayBlock(String(d));
+      if (block){
+        block.className = "mp-allday-block";
+        container.appendChild(block);
+      }
+    }
+  }
+
   function renderMealsOnly(key){
     var container = document.getElementById("mp-day-view");
     if (!container) return;
@@ -6286,34 +6340,8 @@ var WORKOUT_DATA = {
       return;
     }
 
-    var day = MEALPLAN_DAYS[key];
-    if (!day) return;
-
-    var header = document.createElement("div");
-    header.className = "mp-day-header";
-    var h3 = document.createElement("h3");
-    h3.textContent = "Day " + key + " \u2014 " + day.weekday;
-    var sub = document.createElement("p");
-    sub.className = "panel-sub";
-    sub.textContent = day.location + " \u00b7 " + day.suggestedLoad;
-    header.appendChild(h3);
-    header.appendChild(sub);
-    container.appendChild(header);
-
-    var tagsRow = document.createElement("div");
-    tagsRow.className = "mp-info-tags";
-    var t = day.totals;
-    tagsRow.appendChild(tagEl(t.kcal + " kcal", "tag-primary"));
-    tagsRow.appendChild(tagEl("P " + t.protein + "g", "tag-cyan"));
-    tagsRow.appendChild(tagEl("C " + t.carbs + "g", "tag-cyan"));
-    tagsRow.appendChild(tagEl("F " + t.fat + "g", "tag-cyan"));
-    tagsRow.appendChild(tagEl("Fibre " + t.fibre + "g", "tag-cyan"));
-    container.appendChild(tagsRow);
-
-    var mealList = document.createElement("div");
-    mealList.className = "mp-meal-list";
-    day.meals.forEach(function(m){ mealList.appendChild(buildMealCard(m)); });
-    container.appendChild(mealList);
+    var block = buildDayBlock(key);
+    if (block) container.appendChild(block);
   }
 
   function selectMpDay(key){
@@ -6323,6 +6351,15 @@ var WORKOUT_DATA = {
     renderMealsOnly(key);
   }
   window.__selectMpDay = selectMpDay;
+  window.__refreshMealsBrowse = function(){
+    var activeBtn = document.querySelector("#mp-week-toggle .week-toggle-btn.active");
+    if (activeBtn && activeBtn.getAttribute("data-mpweek") === "all"){
+      renderAllDays();
+      return;
+    }
+    var activeDay = document.querySelector("#mp-day-select .day-dial.active");
+    if (activeDay) renderMealsOnly(activeDay.getAttribute("data-mpday"));
+  };
 
   function initMealsView(){
     var todayDay = computeTodayPlanDay();
@@ -6336,8 +6373,16 @@ var WORKOUT_DATA = {
 
   document.querySelectorAll("#mp-week-toggle .week-toggle-btn").forEach(function(b){
     b.addEventListener("click", function(){
-      currentMpWeek = parseInt(b.getAttribute("data-mpweek"), 10);
+      var val = b.getAttribute("data-mpweek");
       document.querySelectorAll("#mp-week-toggle .week-toggle-btn").forEach(function(x){ x.classList.toggle("active", x === b); });
+      var daySelectEl = document.getElementById("mp-day-select");
+      if (val === "all"){
+        if (daySelectEl) daySelectEl.hidden = true;
+        renderAllDays();
+        return;
+      }
+      if (daySelectEl) daySelectEl.hidden = false;
+      currentMpWeek = parseInt(val, 10);
       renderDaySelect(currentMpWeek);
       selectMpDay(currentMpWeek === 1 ? "1" : "8");
     });
@@ -7130,6 +7175,7 @@ var WORKOUT_DATA = {
           else window.__mealMenu.setLunch(day, select.value);
           renderWeek(currentMenuWeek);
           if (window.__renderTodayView) window.__renderTodayView();
+          if (window.__refreshMealsBrowse) window.__refreshMealsBrowse();
         });
         slotDiv.appendChild(select);
 
@@ -7178,6 +7224,7 @@ var WORKOUT_DATA = {
       try{ localStorage.setItem("mealplan:customSlots", JSON.stringify(custom)); }catch(e){}
       renderWeek(currentMenuWeek);
       if (window.__renderTodayView) window.__renderTodayView();
+          if (window.__refreshMealsBrowse) window.__refreshMealsBrowse();
     });
   }
 
